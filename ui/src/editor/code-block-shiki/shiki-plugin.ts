@@ -31,10 +31,9 @@ function getDecorations({
 }) {
   const decorations: Decoration[] = [];
 
-  const codeBlocks = findChildren(doc, (node) => node.type.name === name);
+  const codeBlockCodes = findChildren(doc, (node) => node.type.name === name);
 
-  codeBlocks.forEach((block) => {
-    let from = block.pos + 1;
+  codeBlockCodes.forEach((block) => {
     let language = block.node.attrs.language || defaultLanguage;
     const theme = block.node.attrs.theme || defaultTheme;
 
@@ -50,11 +49,19 @@ function getDecorations({
       ? theme
       : highlighter.getLoadedThemes()[0];
 
+    const themeResolved = highlighter.getTheme(themeToApply);
+    decorations.push(
+      Decoration.node(block.pos, block.pos + block.node.nodeSize, {
+        style: `background-color: ${themeResolved.bg}`,
+      }),
+    );
+
     const tokens = highlighter.codeToTokensBase(block.node.textContent, {
       lang: language,
       theme: themeToApply,
     });
 
+    let from = block.pos + 1;
     for (const line of tokens) {
       for (const token of line) {
         const to = from + token.content.length;
