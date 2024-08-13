@@ -15,7 +15,6 @@ export default ExtensionCodeBlock.extend<CodeBlockShikiOptions>({
   addOptions() {
     return {
       ...this.parent?.(),
-      languageClassPrefix: "shiki-",
       languages: shikiLanguages,
       themes: shikiThemes,
       defaultLanguage: null,

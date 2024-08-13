@@ -1,0 +1,15 @@
+{
+    "scripts": {
+        "build": "pnpm build:theme-lib && pnpm build:ui",
+        "build:ui": "pnpm --filter ./ui build",
+        "build:theme-lib": "pnpm --filter ./theme-lib build"
+    },
+    "dependencies": {
+        "shiki": "^1.12.1"
+    },
+    "devDependencies": {
+        "@rspack/cli": "^1.0.0-beta.4",
+        "@rspack/core": "^1.0.0-beta.4",
+        "typescript": "~5.5.4"
+    }
+}

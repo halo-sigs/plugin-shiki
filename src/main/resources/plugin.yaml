@@ -12,7 +12,7 @@ spec:
   homepage: https://github.com/halo-sigs/plugin-shiki#readme
   repo: https://github.com/halo-sigs/plugin-shiki
   issues: https://github.com/halo-sigs/plugin-shiki/issues
-  displayName: "shiki 代码高亮"
+  displayName: "Shiki 代码高亮"
   description: "提供对 Shiki 的集成，扩展默认编辑器代码块，支持在内容页高亮显示代码块。"
   license:
     - name: "GPL-3.0"
