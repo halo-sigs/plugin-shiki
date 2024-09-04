@@ -5,11 +5,12 @@
         "build:theme-lib": "pnpm --filter ./theme-lib build"
     },
     "dependencies": {
-        "shiki": "^1.12.1"
+        "shiki": "^1.16.1"
     },
     "devDependencies": {
-        "@rspack/cli": "^1.0.0-beta.4",
-        "@rspack/core": "^1.0.0-beta.4",
-        "typescript": "~5.5.4"
+        "@rspack/cli": "^1.0.1",
+        "@rspack/core": "^1.0.1",
+        "typescript": "~5.5.4",
+        "prettier": "^3.3.3"
     }
 }

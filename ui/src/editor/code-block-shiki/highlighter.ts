@@ -37,10 +37,10 @@ export function getShiki() {
 export function loadHighlighter(opts: HighlighterOptions) {
   if (!highlighter && !highlighterPromise) {
     const themes = opts.themes.filter(
-      (theme): theme is BundledTheme => !!theme && theme in bundledThemes
+      (theme): theme is BundledTheme => !!theme && theme in bundledThemes,
     );
     const langs = opts.languages.filter(
-      (lang): lang is BundledLanguage => !!lang && lang in bundledLanguages
+      (lang): lang is BundledLanguage => !!lang && lang in bundledLanguages,
     );
     highlighterPromise = createHighlighter({ themes, langs }).then((h) => {
       highlighter = h;

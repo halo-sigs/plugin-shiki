@@ -1,12 +1,12 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "rspack build",
-        "build": "rspack build",
-        "preview": "vite preview"
-    },
-    "devDependencies": {
-        "@types/node": "20"
-    }
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rspack build",
+    "build": "rspack build",
+    "prettier": "prettier --write src/"
+  },
+  "devDependencies": {
+    "@types/node": "20"
+  }
 }

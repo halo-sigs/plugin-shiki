@@ -6,6 +6,7 @@ export default defineConfig({
   output: {
     publicPath: "/plugins/shiki/assets/console/",
     filename: "main.js",
+    cssChunkFilename: "style.css",
     chunkFilename: "[id].js",
     path: path.resolve("../src/main/resources/console"),
     library: {
@@ -21,6 +22,9 @@ export default defineConfig({
   },
   optimization: {
     providedExports: false,
+  },
+  experiments: {
+    css: true,
   },
   module: {
     rules: [
