@@ -13,19 +13,9 @@ import run.halo.app.plugin.PluginContext;
  * @since 1.0.0
  */
 @Component
-public class StarterPlugin extends BasePlugin {
+public class ShikiPlugin extends BasePlugin {
 
-    public StarterPlugin(PluginContext pluginContext) {
+    public ShikiPlugin(PluginContext pluginContext) {
         super(pluginContext);
-    }
-
-    @Override
-    public void start() {
-        System.out.println("插件启动成功！");
-    }
-
-    @Override
-    public void stop() {
-        System.out.println("插件停止！");
     }
 }
