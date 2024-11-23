@@ -35,21 +35,28 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
                     final IModelFactory modelFactory = context.getModelFactory();
                     model.add(
                             modelFactory.createText(
-                                    commentWidgetScript(customSetting.themeLight(), customSetting.themeDark())));
+                                    commentWidgetScript(customSetting.themeLight(), customSetting.themeDark(),
+                                            customSetting.useBuiltinStyle())));
                 })
                 .then();
     }
 
-    private String commentWidgetScript(String themeLight, String themeDark) {
+    private String commentWidgetScript(String themeLight, String themeDark, boolean useBuiltinStyle) {
 
         final Properties properties = new Properties();
-        properties.setProperty("version", pluginContext.getVersion());
+        final String version = pluginContext.getVersion();
+        properties.setProperty("version", version);
         properties.setProperty("themeLight", themeLight);
         properties.setProperty("themeDark", themeDark);
+        properties.setProperty("builtinStyle",
+                useBuiltinStyle
+                        ? "<link rel=\"stylesheet\" href=\"/plugins/shiki/assets/static/style.css?version=" + version
+                                + "\" />"
+                        : "");
 
         return PROPERTY_PLACEHOLDER_HELPER.replacePlaceholders("""
                 <!-- plugin-shiki start -->
-                <link rel="stylesheet" href="/plugins/shiki/assets/static/main.css?version=${version}" />
+                ${builtinStyle}
                 <script src="/plugins/shiki/assets/static/main.js?version=${version}" defer></script>
                 <script>
                     window.shikiConfig = {
@@ -61,7 +68,7 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
                 """, properties);
     }
 
-    public record CustomSetting(String themeLight, String themeDark) {
+    public record CustomSetting(String themeLight, String themeDark, boolean useBuiltinStyle) {
         public static final String GROUP = "config";
     }
 }

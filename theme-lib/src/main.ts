@@ -1,5 +1,5 @@
-import "./assets/style.css";
 import { codeToHtml } from "shiki/bundle/full";
+import * as transformers from "@shikijs/transformers";
 
 declare global {
   interface Window {
@@ -24,6 +24,14 @@ function highlightAllCodeBlock() {
         light: themeLight,
         dark: themeDark,
       },
+      transformers: [
+        transformers.transformerNotationDiff(),
+        transformers.transformerNotationHighlight(),
+        transformers.transformerNotationWordHighlight(),
+        transformers.transformerNotationFocus(),
+        transformers.transformerNotationErrorLevel(),
+        transformers.transformerRenderWhitespace(),
+      ],
     }).then((html) => {
       codeblock.parentElement!.outerHTML = html;
     });

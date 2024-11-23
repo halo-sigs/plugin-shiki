@@ -122,4 +122,9 @@ spec:
           label: 暗色主题
           value: "vitesse-dark"
           <<: *theme-options
+        - $formkit: checkbox
+          name: useBuiltinStyle
+          label: 使用内置样式
+          value: true
+          help: 开启后将注入插件内置的代码块 css，关闭后将只使用主题提供的 css。
             

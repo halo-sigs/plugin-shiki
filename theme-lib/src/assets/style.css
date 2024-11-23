@@ -1,31 +1,110 @@
-.shiki > code {
-  display: block;
+.shiki {
+  z-index: 1;
+  background: 0 0;
+  margin: 0;
+  padding: 20px 0;
+  position: relative;
   overflow-x: auto;
-  padding: 1em;
-  min-width: 100%;
 }
-
+.shiki code {
+  width: fit-content;
+  min-width: 100%;
+  padding: 0 24px;
+  transition: color 0.5s;
+  display: block;
+}
 @media (prefers-color-scheme: dark) {
   .color-scheme-auto .shiki,
   .color-scheme-auto .shiki span {
     color: var(--shiki-dark) !important;
   }
 }
-
 .dark .shiki,
 .dark .shiki span,
 .color-scheme-dark .shiki,
 .color-scheme-dark .shiki span {
   color: var(--shiki-dark) !important;
 }
-
 @media (prefers-color-scheme: dark) {
   .color-scheme-auto .shiki {
     background-color: var(--shiki-dark-bg) !important;
   }
 }
-
 .color-scheme-dark .shiki,
 .dark .shiki {
   background-color: var(--shiki-dark-bg) !important;
+}
+.shiki .highlighted {
+  background-color: #65758529;
+  width: calc(100% + 48px);
+  margin: 0 -24px;
+  padding: 0 24px;
+  transition: background-color 0.5s;
+  display: inline-block;
+}
+.shiki .highlighted.warning {
+  background-color: #eab30829;
+}
+.shiki .highlighted.error {
+  background-color: #f43f5e29;
+}
+.shiki .highlighted-word {
+  background-color: #f6f6f7;
+  border-color: #c2c2c4;
+  border-radius: 4px;
+  margin: -1px -3px;
+  padding: 1px 3px;
+}
+.dark .shiki .highlighted-word,
+.color-scheme-dark .shiki .highlighted-word {
+  background-color: #202127;
+  border: 1px solid #3c3f44;
+}
+.shiki .diff {
+  width: calc(100% + 48px);
+  margin: 0 -24px;
+  padding: 0 24px;
+  transition: background-color 0.5s;
+  display: inline-block;
+}
+.shiki .diff:before {
+  position: absolute;
+  left: 10px;
+}
+.shiki .diff.remove:before {
+  content: "-";
+  color: #955a5b;
+}
+.dark .shiki .diff.remove:before,
+.color-scheme-dark .shiki .diff.remove:before {
+  color: #c88184;
+}
+.shiki .diff.remove {
+  opacity: 0.7;
+  background-color: #f43f5e29;
+}
+.shiki .diff.add:before {
+  content: "+";
+  color: #3dd68c;
+}
+.dark .shiki .diff.add:before,
+.color-scheme-dark .shiki .diff.add:before {
+  color: #18794e;
+}
+.shiki .diff.add {
+  background-color: #10b98129;
+}
+.has-focused .line:not(.focused) {
+  opacity: 0.7;
+  filter: blur(0.095rem);
+  transition:
+    filter 0.35s,
+    opacity 0.35s;
+}
+.has-focused .line:not(.focused):hover {
+  opacity: 1;
+  filter: none;
+  transition:
+    filter 0.35s,
+    opacity 0.35s;
 }
