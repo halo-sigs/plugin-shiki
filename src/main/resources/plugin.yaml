@@ -9,6 +9,8 @@ spec:
     name: Halo
     website: https://github.com/halo-dev
   logo: logo.svg
+  configMapName: shiki-configmap
+  settingName: shiki-settings
   homepage: https://github.com/halo-sigs/plugin-shiki#readme
   repo: https://github.com/halo-sigs/plugin-shiki
   issues: https://github.com/halo-sigs/plugin-shiki/issues
