@@ -1,5 +1,4 @@
 .shiki {
-  z-index: 1;
   background: 0 0;
   margin: 0;
   padding: 20px 0;
@@ -12,6 +11,7 @@
   padding: 0 24px;
   transition: color 0.5s;
   display: block;
+  box-sizing: border-box;
 }
 @media (prefers-color-scheme: dark) {
   .color-scheme-auto .shiki,
