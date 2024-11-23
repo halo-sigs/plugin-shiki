@@ -7,6 +7,7 @@
     "prettier": "prettier --write src/"
   },
   "dependencies": {
+    "@halo-dev/api-client": "^2.20.0",
     "@halo-dev/console-shared": "^2.19.0",
     "@halo-dev/richtext-editor": "^2.19.0",
     "vue": "^3.5.0"

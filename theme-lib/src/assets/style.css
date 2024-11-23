@@ -1,0 +1,31 @@
+.shiki > code {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  min-width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .color-scheme-auto .shiki,
+  .color-scheme-auto .shiki span {
+    color: var(--shiki-dark) !important;
+  }
+}
+
+.dark .shiki,
+.dark .shiki span,
+.color-scheme-dark .shiki,
+.color-scheme-dark .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .color-scheme-auto .shiki {
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+
+.color-scheme-dark .shiki,
+.dark .shiki {
+  background-color: var(--shiki-dark-bg) !important;
+}

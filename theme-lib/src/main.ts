@@ -1,17 +1,29 @@
+import "./assets/style.css";
 import { codeToHtml } from "shiki/bundle/full";
+
+declare global {
+  interface Window {
+    shikiConfig: {
+      themeLight: string;
+      themeDark: string;
+    };
+  }
+}
 
 function highlightAllCodeBlock() {
   const codeElements = document.querySelectorAll("pre>code");
 
   codeElements.forEach((codeblock) => {
     const lang = extractLanguageFromCodeElement(codeblock) || "text";
-    const theme =
-      extractThemeFromPreElement(codeblock.parentElement as HTMLPreElement) ||
-      "github-light";
+    const themeLight = window.shikiConfig.themeLight;
+    const themeDark = window.shikiConfig.themeDark;
 
     codeToHtml(codeblock.textContent || "", {
       lang,
-      theme,
+      themes: {
+        light: themeLight,
+        dark: themeDark,
+      },
     }).then((html) => {
       codeblock.parentElement!.outerHTML = html;
     });
@@ -31,10 +43,6 @@ function extractLanguageFromCodeElement(codeElement: Element) {
     }
   }
   return null;
-}
-
-function extractThemeFromPreElement(preElement: HTMLPreElement) {
-  return preElement.getAttribute("theme");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
