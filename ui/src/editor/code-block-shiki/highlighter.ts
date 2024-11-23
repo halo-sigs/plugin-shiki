@@ -110,10 +110,8 @@ export async function initHighlighter({
 }) {
   const codeBlocks = findChildren(doc, (node) => node.type.name === name);
 
-  const themes = [
-    ...codeBlocks.map((block) => block.node.attrs.theme as BundledTheme),
-    defaultTheme,
-  ];
+  const themes = [defaultTheme];
+
   const languages = [
     ...codeBlocks.map((block) => block.node.attrs.language as BundledLanguage),
     defaultLanguage,

@@ -2,7 +2,6 @@ package run.halo.shiki;
 
 import java.util.Properties;
 
-import org.pf4j.PluginWrapper;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PropertyPlaceholderHelper;
 import org.thymeleaf.context.ITemplateContext;
@@ -13,6 +12,7 @@ import org.thymeleaf.processor.element.IElementModelStructureHandler;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 import run.halo.app.plugin.PluginContext;
+import run.halo.app.plugin.ReactiveSettingFetcher;
 import run.halo.app.theme.dialect.TemplateHeadProcessor;
 
 /**
@@ -26,23 +26,49 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
 
     private final PluginContext pluginContext;
 
+    private final ReactiveSettingFetcher settingFetcher;
+
     @Override
-    public Mono<Void> process(ITemplateContext context, IModel model,
-            IElementModelStructureHandler structureHandler) {
-        final IModelFactory modelFactory = context.getModelFactory();
-        model.add(modelFactory.createText(commentWidgetScript()));
-        return Mono.empty();
+    public Mono<Void> process(ITemplateContext context, IModel model, IElementModelStructureHandler structureHandler) {
+        return settingFetcher.fetch(CustomSetting.GROUP, CustomSetting.class)
+                .doOnNext(customSetting -> {
+                    final IModelFactory modelFactory = context.getModelFactory();
+                    model.add(
+                            modelFactory.createText(
+                                    commentWidgetScript(customSetting.themeLight(), customSetting.themeDark(),
+                                            customSetting.useBuiltinStyle())));
+                })
+                .then();
     }
 
-    private String commentWidgetScript() {
+    private String commentWidgetScript(String themeLight, String themeDark, boolean useBuiltinStyle) {
 
         final Properties properties = new Properties();
-        properties.setProperty("version", pluginContext.getVersion());
+        final String version = pluginContext.getVersion();
+        properties.setProperty("version", version);
+        properties.setProperty("themeLight", themeLight);
+        properties.setProperty("themeDark", themeDark);
+        properties.setProperty("builtinStyle",
+                useBuiltinStyle
+                        ? "<link rel=\"stylesheet\" href=\"/plugins/shiki/assets/static/style.css?version=" + version
+                                + "\" />"
+                        : "");
 
         return PROPERTY_PLACEHOLDER_HELPER.replacePlaceholders("""
                 <!-- plugin-shiki start -->
+                ${builtinStyle}
                 <script src="/plugins/shiki/assets/static/main.js?version=${version}" defer></script>
+                <script>
+                    window.shikiConfig = {
+                        themeLight: "${themeLight}" === "null" ? "github-light" : "${themeLight}",
+                        themeDark: "${themeDark}" === "null" ? "github-dark" : "${themeDark}",
+                    };
+                </script>
                 <!-- plugin-shiki end -->
                 """, properties);
+    }
+
+    public record CustomSetting(String themeLight, String themeDark, boolean useBuiltinStyle) {
+        public static final String GROUP = "config";
     }
 }

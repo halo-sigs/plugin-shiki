@@ -16,18 +16,17 @@ import {
   loadLanguage,
   loadTheme,
 } from "./highlighter";
+import { coreApiClient } from "@halo-dev/api-client";
 
 /** Create code decorations for the current document */
 function getDecorations({
   doc,
   name,
-  defaultTheme,
   defaultLanguage,
 }: {
   doc: PMNode;
   name: string;
   defaultLanguage: BundledLanguage | null | undefined;
-  defaultTheme: BundledTheme;
 }) {
   const decorations: Decoration[] = [];
 
@@ -35,7 +34,6 @@ function getDecorations({
 
   codeBlockCodes.forEach((block) => {
     let language = block.node.attrs.language || defaultLanguage;
-    const theme = block.node.attrs.theme || defaultTheme;
 
     const highlighter = getShiki();
 
@@ -45,9 +43,7 @@ function getDecorations({
       language = "plaintext";
     }
 
-    const themeToApply = highlighter.getLoadedThemes().includes(theme)
-      ? theme
-      : highlighter.getLoadedThemes()[0];
+    const themeToApply = highlighter.getLoadedThemes()[0] as BundledTheme;
 
     const themeResolved = highlighter.getTheme(themeToApply);
     decorations.push(
@@ -85,11 +81,9 @@ function getDecorations({
 export function ShikiPlugin({
   name,
   defaultLanguage,
-  defaultTheme,
 }: {
   name: string;
   defaultLanguage: BundledLanguage | null | undefined;
-  defaultTheme: BundledTheme;
 }) {
   const shikiPlugin: Plugin<any> = new Plugin({
     key: new PluginKey("shiki"),
@@ -111,6 +105,16 @@ export function ShikiPlugin({
         // Initialize shiki async, and then highlight initial document
         async initDecorations() {
           const doc = view.state.doc;
+
+          let defaultTheme:BundledTheme = "github-light";
+          const configmap = await coreApiClient.configMap.getConfigMap({
+            name: "shiki-configmap",
+          });
+          if (configmap.data.data?.config) {
+            // 由于 console 本身没有深色模式，所以暂时就只用浅色主题
+            defaultTheme = JSON.parse(configmap.data.data.config).themeLight;
+          }
+          
           await initHighlighter({ doc, name, defaultLanguage, defaultTheme });
           const tr = view.state.tr.setMeta("shikiPluginForceDecoration", true);
           view.dispatch(tr);
@@ -157,7 +161,6 @@ export function ShikiPlugin({
           doc,
           name,
           defaultLanguage,
-          defaultTheme,
         });
       },
       apply: (transaction, decorationSet, oldState, newState) => {
@@ -210,7 +213,6 @@ export function ShikiPlugin({
             doc: transaction.doc,
             name,
             defaultLanguage,
-            defaultTheme,
           });
         }
 

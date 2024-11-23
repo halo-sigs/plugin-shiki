@@ -1,17 +1,56 @@
 import { codeToHtml } from "shiki/bundle/full";
+import * as transformers from "@shikijs/transformers";
+
+declare global {
+  interface Window {
+    shikiConfig: {
+      themeLight: string;
+      themeDark: string;
+    };
+  }
+}
+
+// Check the first line of code block to see if it should use transformer
+function processCodes(input: string) {
+  const lines = input.split('\n');
+
+  const firstLine = lines[0];
+  const isUseTransformer = !firstLine.includes('[!no transformer]');
+
+  const codes = isUseTransformer ? input : lines.slice(1).join('\n');
+
+  return {
+      isUseTransformer,
+      codes,
+  };
+}
 
 function highlightAllCodeBlock() {
   const codeElements = document.querySelectorAll("pre>code");
 
   codeElements.forEach((codeblock) => {
     const lang = extractLanguageFromCodeElement(codeblock) || "text";
-    const theme =
-      extractThemeFromPreElement(codeblock.parentElement as HTMLPreElement) ||
-      "github-light";
+    const themeLight = window.shikiConfig.themeLight;
+    const themeDark = window.shikiConfig.themeDark;
 
-    codeToHtml(codeblock.textContent || "", {
+    const { isUseTransformer, codes } = processCodes(codeblock.textContent || "");
+
+    codeToHtml(codes || "", {
       lang,
-      theme,
+      themes: {
+        light: themeLight,
+        dark: themeDark,
+      },
+      transformers: isUseTransformer
+        ? [
+            transformers.transformerNotationDiff(),
+            transformers.transformerNotationHighlight(),
+            transformers.transformerNotationWordHighlight(),
+            transformers.transformerNotationFocus(),
+            transformers.transformerNotationErrorLevel(),
+            transformers.transformerRenderWhitespace(),
+          ]
+        : [],
     }).then((html) => {
       codeblock.parentElement!.outerHTML = html;
     });
@@ -31,10 +70,6 @@ function extractLanguageFromCodeElement(codeElement: Element) {
     }
   }
   return null;
-}
-
-function extractThemeFromPreElement(preElement: HTMLPreElement) {
-  return preElement.getAttribute("theme");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
