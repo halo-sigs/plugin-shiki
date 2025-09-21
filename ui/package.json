@@ -1,21 +1,28 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "rspack build --watch",
-    "build": "rspack build",
+    "build": "rsbuild build",
+    "dev": "rsbuild build --env-mode development --watch",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "prettier": "prettier --write src/"
   },
+  "prettier": {
+    "endOfLine": "lf",
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false
+  },
   "dependencies": {
-    "@halo-dev/console-shared": "^2.19.0",
-    "@halo-dev/richtext-editor": "^2.19.0",
-    "vue": "^3.5.0"
+    "@halo-dev/console-shared": "^2.21.0",
+    "@halo-dev/richtext-editor": "^2.21.0",
+    "vue": "^3.5.21"
   },
   "devDependencies": {
-    "@halo-dev/ui-plugin-bundler-kit": "^2.19.0",
-    "@rushstack/eslint-patch": "^1.10.4",
-    "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.16.4",
-    "eslint": "^8.57.0"
+    "@halo-dev/ui-plugin-bundler-kit": "^2.21.2",
+    "@rsbuild/core": "^1.5.10",
+    "@rushstack/eslint-patch": "^1.12.0",
+    "@tsconfig/node20": "^20.1.6",
+    "@types/node": "^20.19.17",
+    "eslint": "^8.57.1"
   }
 }

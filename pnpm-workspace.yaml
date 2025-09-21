@@ -1,3 +1,6 @@
 packages:
-  - "ui"
-  - "theme-lib"
+  - ui
+  - theme-lib
+
+onlyBuiltDependencies:
+  - core-js
