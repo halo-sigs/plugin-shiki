@@ -6,23 +6,19 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "prettier": "prettier --write src/"
   },
-  "prettier": {
-    "endOfLine": "lf",
-    "printWidth": 80,
-    "tabWidth": 2,
-    "useTabs": false
-  },
   "dependencies": {
+    "@halo-dev/api-client": "^2.21.1",
+    "@halo-dev/components": "^2.21.0",
     "@halo-dev/console-shared": "^2.21.0",
     "@halo-dev/richtext-editor": "^2.21.0",
+    "@vueuse/core": "^10.11.1",
     "vue": "^3.5.21"
   },
   "devDependencies": {
     "@halo-dev/ui-plugin-bundler-kit": "^2.21.2",
-    "@rsbuild/core": "^1.5.10",
-    "@rushstack/eslint-patch": "^1.12.0",
+    "@rsbuild/core": "^1.5.12",
+    "@rsbuild/plugin-vue": "^1.1.2",
     "@tsconfig/node20": "^20.1.6",
-    "@types/node": "^20.19.17",
-    "eslint": "^8.57.1"
+    "@types/node": "^20.19.17"
   }
 }

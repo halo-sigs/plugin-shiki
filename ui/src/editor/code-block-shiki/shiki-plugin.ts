@@ -1,15 +1,15 @@
 // The code comes from https://github.com/timomeh/tiptap-extension-code-block-shiki/blob/main/lib/highlighter.ts
 
-import { type BundledLanguage, type BundledTheme } from "shiki";
 import {
   Decoration,
   DecorationSet,
+  findChildren,
   Plugin,
   PluginKey,
-  type PMNode,
   type PluginView,
-  findChildren,
+  type PMNode,
 } from "@halo-dev/richtext-editor";
+import type { BundledLanguage, BundledTheme } from "shiki";
 import {
   getShiki,
   initHighlighter,
@@ -91,6 +91,7 @@ export function ShikiPlugin({
   defaultLanguage: BundledLanguage | null | undefined;
   defaultTheme: BundledTheme;
 }) {
+  // biome-ignore lint/suspicious/noExplicitAny: not sure
   const shikiPlugin: Plugin<any> = new Plugin({
     key: new PluginKey("shiki"),
 
@@ -183,18 +184,18 @@ export function ShikiPlugin({
             // (for example, a transaction that affects the entire document).
             // Such transactions can happen during collab syncing via y-prosemirror, for example.
             transaction.steps.some((step) => {
-              // @ts-ignore
+              // @ts-expect-error
               return (
-                // @ts-ignore
+                // @ts-expect-error
                 step.from !== undefined &&
-                // @ts-ignore
+                // @ts-expect-error
                 step.to !== undefined &&
                 oldNodes.some((node) => {
-                  // @ts-ignore
+                  // @ts-expect-error
                   return (
-                    // @ts-ignore
+                    // @ts-expect-error
                     node.pos >= step.from &&
-                    // @ts-ignore
+                    // @ts-expect-error
                     node.pos + node.node.nodeSize <= step.to
                   );
                 })

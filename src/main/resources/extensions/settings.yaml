@@ -1,0 +1,449 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: plugin-shiki-settings
+spec:
+  forms:
+    - group: basic
+      label: 基本设置
+      formSchema:
+        - $formkit: checkbox
+          name: enabled
+          id: enabled
+          label: 启用主题侧渲染
+          help: 启用之后会自动渲染文章中的代码块，如果你只需要编辑器的代码高亮，主题中的代码渲染由主题自行实现，可以关闭此选项。
+          value: true
+        - $formkit: select
+          label: 额外渲染规则
+          if: $get(enabled).value
+          name: extraPathPatterns
+          id: extraPathPatterns
+          key: extraPathPatterns
+          allowCreate: true
+          searchable: true
+          clearable: true
+          autoSelect: false
+          multiple: true
+          help: 默认情况下，此插件只会对文章和页面的内容生效，如果你希望在其他路径下也启用主题侧渲染，可以在这里添加额外的路径模式，支持通配符（*）。例如：/docs/** 表示 /docs/ 下的所有内容。
+          options:
+            - label: 瞬间（/moments/**）
+              value: /moments/**
+            - label: Docsme 文档（/docs/**）
+              value: /docs/**
+        - $formkit: select
+          if: $get(enabled).value
+          name: variant
+          id: variant
+          key: variant
+          label: 风格
+          value: simple
+          options:
+            - label: 简单
+              value: simple
+            - label: Mac 窗口
+              value: mac
+        - $formkit: select
+          if: $get(enabled).value
+          name: lightTheme
+          key: lightTheme
+          id: lightTheme
+          label: 亮色主题
+          value: github-light
+          validation: required
+          searchable: true
+          clearable: true
+          options:
+            - label: Andromeeda（dark）
+              value: andromeeda
+            - label: Aurora X（dark）
+              value: aurora-x
+            - label: Ayu Dark（dark）
+              value: ayu-dark
+            - label: Catppuccin Frappé（dark）
+              value: catppuccin-frappe
+            - label: Catppuccin Latte（light）
+              value: catppuccin-latte
+            - label: Catppuccin Macchiato（dark）
+              value: catppuccin-macchiato
+            - label: Catppuccin Mocha（dark）
+              value: catppuccin-mocha
+            - label: Dark Plus（dark）
+              value: dark-plus
+            - label: Dracula Theme（dark）
+              value: dracula
+            - label: Dracula Theme Soft（dark）
+              value: dracula-soft
+            - label: Everforest Dark（dark）
+              value: everforest-dark
+            - label: Everforest Light（light）
+              value: everforest-light
+            - label: GitHub Dark（dark）
+              value: github-dark
+            - label: GitHub Dark Default（dark）
+              value: github-dark-default
+            - label: GitHub Dark Dimmed（dark）
+              value: github-dark-dimmed
+            - label: GitHub Dark High Contrast（dark）
+              value: github-dark-high-contrast
+            - label: GitHub Light（light）
+              value: github-light
+            - label: GitHub Light Default（light）
+              value: github-light-default
+            - label: GitHub Light High Contrast（light）
+              value: github-light-high-contrast
+            - label: Gruvbox Dark Hard（dark）
+              value: gruvbox-dark-hard
+            - label: Gruvbox Dark Medium（dark）
+              value: gruvbox-dark-medium
+            - label: Gruvbox Dark Soft（dark）
+              value: gruvbox-dark-soft
+            - label: Gruvbox Light Hard（light）
+              value: gruvbox-light-hard
+            - label: Gruvbox Light Medium（light）
+              value: gruvbox-light-medium
+            - label: Gruvbox Light Soft（light）
+              value: gruvbox-light-soft
+            - label: Houston（dark）
+              value: houston
+            - label: Kanagawa Dragon（dark）
+              value: kanagawa-dragon
+            - label: Kanagawa Lotus（light）
+              value: kanagawa-lotus
+            - label: Kanagawa Wave（dark）
+              value: kanagawa-wave
+            - label: LaserWave（dark）
+              value: laserwave
+            - label: Light Plus（light）
+              value: light-plus
+            - label: Material Theme（dark）
+              value: material-theme
+            - label: Material Theme Darker（dark）
+              value: material-theme-darker
+            - label: Material Theme Lighter（light）
+              value: material-theme-lighter
+            - label: Material Theme Ocean（dark）
+              value: material-theme-ocean
+            - label: Material Theme Palenight（dark）
+              value: material-theme-palenight
+            - label: Min Dark（dark）
+              value: min-dark
+            - label: Min Light（light）
+              value: min-light
+            - label: Monokai（dark）
+              value: monokai
+            - label: Night Owl（dark）
+              value: night-owl
+            - label: Nord（dark）
+              value: nord
+            - label: One Dark Pro（dark）
+              value: one-dark-pro
+            - label: One Light（light）
+              value: one-light
+            - label: Plastic（dark）
+              value: plastic
+            - label: Poimandres（dark）
+              value: poimandres
+            - label: Red（dark）
+              value: red
+            - label: Rosé Pine（dark）
+              value: rose-pine
+            - label: Rosé Pine Dawn（light）
+              value: rose-pine-dawn
+            - label: Rosé Pine Moon（dark）
+              value: rose-pine-moon
+            - label: Slack Dark（dark）
+              value: slack-dark
+            - label: Slack Ochin（light）
+              value: slack-ochin
+            - label: Snazzy Light（light）
+              value: snazzy-light
+            - label: Solarized Dark（dark）
+              value: solarized-dark
+            - label: Solarized Light（light）
+              value: solarized-light
+            - label: Synthwave '84（dark）
+              value: synthwave-84
+            - label: Tokyo Night（dark）
+              value: tokyo-night
+            - label: Vesper（dark）
+              value: vesper
+            - label: Vitesse Black（dark）
+              value: vitesse-black
+            - label: Vitesse Dark（dark）
+              value: vitesse-dark
+            - label: Vitesse Light（light）
+              value: vitesse-light
+        - $formkit: select
+          if: $get(enabled).value
+          name: darkTheme
+          id: darkTheme
+          key: darkTheme
+          label: 暗色主题
+          value: github-dark
+          help: 如不填写，默认与亮色主题一致
+          searchable: true
+          clearable: true
+          options:
+            - label: Andromeeda（dark）
+              value: andromeeda
+            - label: Aurora X（dark）
+              value: aurora-x
+            - label: Ayu Dark（dark）
+              value: ayu-dark
+            - label: Catppuccin Frappé（dark）
+              value: catppuccin-frappe
+            - label: Catppuccin Latte（light）
+              value: catppuccin-latte
+            - label: Catppuccin Macchiato（dark）
+              value: catppuccin-macchiato
+            - label: Catppuccin Mocha（dark）
+              value: catppuccin-mocha
+            - label: Dark Plus（dark）
+              value: dark-plus
+            - label: Dracula Theme（dark）
+              value: dracula
+            - label: Dracula Theme Soft（dark）
+              value: dracula-soft
+            - label: Everforest Dark（dark）
+              value: everforest-dark
+            - label: Everforest Light（light）
+              value: everforest-light
+            - label: GitHub Dark（dark）
+              value: github-dark
+            - label: GitHub Dark Default（dark）
+              value: github-dark-default
+            - label: GitHub Dark Dimmed（dark）
+              value: github-dark-dimmed
+            - label: GitHub Dark High Contrast（dark）
+              value: github-dark-high-contrast
+            - label: GitHub Light（light）
+              value: github-light
+            - label: GitHub Light Default（light）
+              value: github-light-default
+            - label: GitHub Light High Contrast（light）
+              value: github-light-high-contrast
+            - label: Gruvbox Dark Hard（dark）
+              value: gruvbox-dark-hard
+            - label: Gruvbox Dark Medium（dark）
+              value: gruvbox-dark-medium
+            - label: Gruvbox Dark Soft（dark）
+              value: gruvbox-dark-soft
+            - label: Gruvbox Light Hard（light）
+              value: gruvbox-light-hard
+            - label: Gruvbox Light Medium（light）
+              value: gruvbox-light-medium
+            - label: Gruvbox Light Soft（light）
+              value: gruvbox-light-soft
+            - label: Houston（dark）
+              value: houston
+            - label: Kanagawa Dragon（dark）
+              value: kanagawa-dragon
+            - label: Kanagawa Lotus（light）
+              value: kanagawa-lotus
+            - label: Kanagawa Wave（dark）
+              value: kanagawa-wave
+            - label: LaserWave（dark）
+              value: laserwave
+            - label: Light Plus（light）
+              value: light-plus
+            - label: Material Theme（dark）
+              value: material-theme
+            - label: Material Theme Darker（dark）
+              value: material-theme-darker
+            - label: Material Theme Lighter（light）
+              value: material-theme-lighter
+            - label: Material Theme Ocean（dark）
+              value: material-theme-ocean
+            - label: Material Theme Palenight（dark）
+              value: material-theme-palenight
+            - label: Min Dark（dark）
+              value: min-dark
+            - label: Min Light（light）
+              value: min-light
+            - label: Monokai（dark）
+              value: monokai
+            - label: Night Owl（dark）
+              value: night-owl
+            - label: Nord（dark）
+              value: nord
+            - label: One Dark Pro（dark）
+              value: one-dark-pro
+            - label: One Light（light）
+              value: one-light
+            - label: Plastic（dark）
+              value: plastic
+            - label: Poimandres（dark）
+              value: poimandres
+            - label: Red（dark）
+              value: red
+            - label: Rosé Pine（dark）
+              value: rose-pine
+            - label: Rosé Pine Dawn（light）
+              value: rose-pine-dawn
+            - label: Rosé Pine Moon（dark）
+              value: rose-pine-moon
+            - label: Slack Dark（dark）
+              value: slack-dark
+            - label: Slack Ochin（light）
+              value: slack-ochin
+            - label: Snazzy Light（light）
+              value: snazzy-light
+            - label: Solarized Dark（dark）
+              value: solarized-dark
+            - label: Solarized Light（light）
+              value: solarized-light
+            - label: Synthwave '84（dark）
+              value: synthwave-84
+            - label: Tokyo Night（dark）
+              value: tokyo-night
+            - label: Vesper（dark）
+              value: vesper
+            - label: Vitesse Black（dark）
+              value: vitesse-black
+            - label: Vitesse Dark（dark）
+              value: vitesse-dark
+            - label: Vitesse Light（light）
+              value: vitesse-light
+        - $cmp: ShikiThemePreview
+          if: $get(enabled).value
+          key: preview
+          props:
+            variant: $get(variant).value
+            lightTheme: $get(lightTheme).value
+            darkTheme: $get(darkTheme).value
+    - group: editor
+      label: 编辑器设置
+      formSchema:
+        - $formkit: select
+          name: theme
+          id: theme
+          key: theme
+          label: 高亮主题
+          value: github-light
+          searchable: true
+          clearable: true
+          options:
+            - label: Andromeeda（dark）
+              value: andromeeda
+            - label: Aurora X（dark）
+              value: aurora-x
+            - label: Ayu Dark（dark）
+              value: ayu-dark
+            - label: Catppuccin Frappé（dark）
+              value: catppuccin-frappe
+            - label: Catppuccin Latte（light）
+              value: catppuccin-latte
+            - label: Catppuccin Macchiato（dark）
+              value: catppuccin-macchiato
+            - label: Catppuccin Mocha（dark）
+              value: catppuccin-mocha
+            - label: Dark Plus（dark）
+              value: dark-plus
+            - label: Dracula Theme（dark）
+              value: dracula
+            - label: Dracula Theme Soft（dark）
+              value: dracula-soft
+            - label: Everforest Dark（dark）
+              value: everforest-dark
+            - label: Everforest Light（light）
+              value: everforest-light
+            - label: GitHub Dark（dark）
+              value: github-dark
+            - label: GitHub Dark Default（dark）
+              value: github-dark-default
+            - label: GitHub Dark Dimmed（dark）
+              value: github-dark-dimmed
+            - label: GitHub Dark High Contrast（dark）
+              value: github-dark-high-contrast
+            - label: GitHub Light（light）
+              value: github-light
+            - label: GitHub Light Default（light）
+              value: github-light-default
+            - label: GitHub Light High Contrast（light）
+              value: github-light-high-contrast
+            - label: Gruvbox Dark Hard（dark）
+              value: gruvbox-dark-hard
+            - label: Gruvbox Dark Medium（dark）
+              value: gruvbox-dark-medium
+            - label: Gruvbox Dark Soft（dark）
+              value: gruvbox-dark-soft
+            - label: Gruvbox Light Hard（light）
+              value: gruvbox-light-hard
+            - label: Gruvbox Light Medium（light）
+              value: gruvbox-light-medium
+            - label: Gruvbox Light Soft（light）
+              value: gruvbox-light-soft
+            - label: Houston（dark）
+              value: houston
+            - label: Kanagawa Dragon（dark）
+              value: kanagawa-dragon
+            - label: Kanagawa Lotus（light）
+              value: kanagawa-lotus
+            - label: Kanagawa Wave（dark）
+              value: kanagawa-wave
+            - label: LaserWave（dark）
+              value: laserwave
+            - label: Light Plus（light）
+              value: light-plus
+            - label: Material Theme（dark）
+              value: material-theme
+            - label: Material Theme Darker（dark）
+              value: material-theme-darker
+            - label: Material Theme Lighter（light）
+              value: material-theme-lighter
+            - label: Material Theme Ocean（dark）
+              value: material-theme-ocean
+            - label: Material Theme Palenight（dark）
+              value: material-theme-palenight
+            - label: Min Dark（dark）
+              value: min-dark
+            - label: Min Light（light）
+              value: min-light
+            - label: Monokai（dark）
+              value: monokai
+            - label: Night Owl（dark）
+              value: night-owl
+            - label: Nord（dark）
+              value: nord
+            - label: One Dark Pro（dark）
+              value: one-dark-pro
+            - label: One Light（light）
+              value: one-light
+            - label: Plastic（dark）
+              value: plastic
+            - label: Poimandres（dark）
+              value: poimandres
+            - label: Red（dark）
+              value: red
+            - label: Rosé Pine（dark）
+              value: rose-pine
+            - label: Rosé Pine Dawn（light）
+              value: rose-pine-dawn
+            - label: Rosé Pine Moon（dark）
+              value: rose-pine-moon
+            - label: Slack Dark（dark）
+              value: slack-dark
+            - label: Slack Ochin（light）
+              value: slack-ochin
+            - label: Snazzy Light（light）
+              value: snazzy-light
+            - label: Solarized Dark（dark）
+              value: solarized-dark
+            - label: Solarized Light（light）
+              value: solarized-light
+            - label: Synthwave '84（dark）
+              value: synthwave-84
+            - label: Tokyo Night（dark）
+              value: tokyo-night
+            - label: Vesper（dark）
+              value: vesper
+            - label: Vitesse Black（dark）
+              value: vitesse-black
+            - label: Vitesse Dark（dark）
+              value: vitesse-dark
+            - label: Vitesse Light（light）
+              value: vitesse-light
+        - $cmp: ShikiEditorPreview
+          key: preview
+          props:
+            theme: $get(theme).value

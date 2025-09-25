@@ -1,16 +1,25 @@
 {
-    "scripts": {
-        "build": "pnpm build:theme-lib && pnpm build:ui",
-        "build:ui": "pnpm --filter ./ui build",
-        "build:theme-lib": "pnpm --filter ./theme-lib build"
-    },
-    "dependencies": {
-        "shiki": "^1.29.2"
-    },
-    "devDependencies": {
-        "@rspack/cli": "^1.5.5",
-        "@rspack/core": "^1.5.5",
-        "prettier": "^3.6.2",
-        "typescript": "~5.5.4"
-    }
+  "scripts": {
+    "build": "pnpm -r run build",
+    "build:theme-lib": "pnpm -C theme-lib build",
+    "build:ui": "pnpm -C ui build",
+    "check": "biome check --write",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*": [
+      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
+  },
+  "dependencies": {
+    "shiki": "^3.13.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.0",
+    "prettier": "^3.6.2",
+    "typescript": "~5.9.2"
+  },
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
 }
