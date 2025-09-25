@@ -13,7 +13,6 @@
     "unocss": "^66.5.2"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.387",
-    "vite": "^7.1.7"
+    "@iconify/json": "^2.2.387"
   }
 }
