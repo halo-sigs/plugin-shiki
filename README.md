@@ -1,76 +1,45 @@
-# plugin-starter
+# Shiki 代码高亮
 
-Halo 2.0 插件开发快速开始模板。
+适用于 Halo 的 Shiki 代码高亮插件，为文章等内容的代码块提供高亮渲染支持。
 
-## 开发环境
+## 特性
 
-插件开发的详细文档请查阅：<https://docs.halo.run/developer-guide/plugin/introduction>
+- 支持 200+ 种编程语言的代码高亮。
+- 支持 60 个代码高亮风格。
+- 支持两种 UI 风格（简单 / Mac 窗口）
+- 无需主题主动适配，在不同主题之间表现一致。
+- 支持为 Halo 编辑器设置代码块高亮风格。
+- 支持为非文章页面启用代码高亮渲染，如瞬间、Docsme 文档页面等。
+- 体积轻量，支持异步加载语言和高亮风格依赖。
+- 支持分别为暗色和亮色模式设置代码高亮风格。
 
-所需环境：
+## 使用方式
 
-1. Java 17
-2. Node 20
-3. pnpm 9
-4. Docker (可选)
+1. 下载，目前提供以下两个下载方式：
+    - GitHub Releases：访问 [Releases](https://github.com/halo-sigs/plugin-shiki/releases) 下载 Assets 中的 JAR 文件。
+    - Halo 应用市场：https://www.halo.run/store/apps/app-kzloktzn。
+2. 安装，插件安装和更新方式可参考：https://docs.halo.run/user-guide/plugins。
 
-克隆项目：
+## 注意事项
 
-```bash
-git clone git@github.com:halo-sigs/plugin-starter.git
+1. [highlight.js 代码高亮](https://github.com/halo-sigs/plugin-highlightjs) 和此插件均为 Halo 官方维护，但目前更加推荐使用此插件，highlight.js 插件将在未来进入维护状态（仅修复问题，不再添加新功能）。
+2. 此插件已经尽可能在多个主题中测试兼容性，但无法保证完全兼容，特别是当主题自行实现了代码高亮功能时。如果遇到兼容性问题，建议先尝试关闭主题的代码高亮功能，或者向主题反馈兼容问题。
+3. 部分主题使用了 Pjax，经测试在文章页面可以完全兼容。但如果你设置了其他页面的渲染规则，可能在切换页面后代码高亮无法正常渲染，建议考虑关闭 Pjax 功能。
+4. 插件支持为主题的暗色和亮色模式设置不同的代码高亮风格，并且尽可能为不同主题的配色切换方案做了适配，但如果你使用的主题不兼容，可能需要向主题反馈兼容问题。
 
-# 或者当你 fork 之后
+## 主题适配
 
-git clone git@github.com:{your_github_id}/plugin-starter.git
-```
+### 暗色/亮色模式切换
 
-```bash
-cd path/to/plugin-starter
-```
+插件支持分别为暗色和亮色模式设置代码高亮风格，但仍然需要主题提供适配，适配方案：
 
-### 运行方式 1（推荐）
+- 在 html 或者 body 标签添加 class：
+   1. `color-scheme-auto`：自动模式，根据系统的暗黑模式自动切换。
+   2. `color-scheme-dark` / `dark`：强制暗黑模式。
+   3. `color-scheme-light` / `light`：强制明亮模式。
+- 在 html 或者 body 标签添加 `data-color-scheme` 属性：
+   1. `auto`：自动模式，根据系统的暗黑模式自动切换。
+   2. `dark`：强制暗黑模式。
+   3. `light`：强制明亮模式。
 
-> 此方式需要本地安装 Docker
-
-```bash
-# macOS / Linux
-./gradlew pnpmInstall
-
-# Windows
-./gradlew.bat pnpmInstall
-```
-
-```bash
-# macOS / Linux
-./gradlew haloServer
-
-# Windows
-./gradlew.bat haloServer
-```
-
-执行此命令后，会自动创建一个 Halo 的 Docker 容器并加载当前的插件，更多文档可查阅：<https://docs.halo.run/developer-guide/plugin/basics/devtools>
-
-### 运行方式 2
-
-> 此方式需要使用源码运行 Halo
-
-编译插件：
-
-```bash
-# macOS / Linux
-./gradlew build
-
-# Windows
-./gradlew.bat build
-```
-
-修改 Halo 配置文件：
-
-```yaml
-halo:
-  plugin:
-    runtime-mode: development
-    fixedPluginPath:
-      - "/path/to/plugin-starter"
-```
-
-最后重启 Halo 项目即可。
+任选其一即可，如果你的主题已经满足上面的要求，可以不做任何改动。
