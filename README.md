@@ -6,22 +6,22 @@
 
 ## 特性
 
-- 支持 200+ 种编程语言的代码高亮，详见：[Languages | Shiki](https://shiki.style/languages)。
-- 支持 60 个代码高亮风格，详见：[Themes | Shiki](https://shiki.style/themes)。
+- 支持 200+ 种编程语言的代码高亮，详见：[Languages | Shiki](https://shiki.style/languages)
+- 支持 60 个代码高亮风格，详见：[Themes | Shiki](https://shiki.style/themes)
 - 支持两种 UI 风格（简单 / Mac 窗口）
-- 无需主题主动适配，在不同主题之间表现一致。
-- 支持为 Halo 编辑器设置代码块高亮风格。
-- 支持为非文章页面启用代码高亮渲染，如瞬间、Docsme 文档页面等。
-- 体积轻量，支持异步加载语言和高亮风格依赖。
-- 支持分别为暗色和亮色模式设置代码高亮风格。
-- 支持代码行高亮、行聚焦、代码对比。
+- 无需主题主动适配，在不同主题之间表现一致
+- 支持为 Halo 编辑器设置代码块高亮风格
+- 支持为非文章页面启用代码高亮渲染，如瞬间、Docsme 文档页面等
+- 体积轻量，支持异步加载语言和高亮风格依赖
+- 支持分别为暗色和亮色模式设置代码高亮风格
+- 支持代码行高亮、行聚焦、代码对比
 
 ## 安装
 
 1. 下载，目前提供以下两个下载方式：
-    - GitHub Releases：访问 [Releases](https://github.com/halo-sigs/plugin-shiki/releases) 下载 Assets 中的 JAR 文件。
-    - Halo 应用市场：https://www.halo.run/store/apps/app-kzloktzn。
-2. 安装，插件安装和更新方式可参考：https://docs.halo.run/user-guide/plugins。
+    - GitHub Releases：访问 [Releases](https://github.com/halo-sigs/plugin-shiki/releases) 下载 Assets 中的 JAR 文件
+    - Halo 应用市场：https://www.halo.run/store/apps/app-kzloktzn
+2. 安装，插件安装和更新方式可参考：https://docs.halo.run/user-guide/plugins
 
 ## 使用方式
 
