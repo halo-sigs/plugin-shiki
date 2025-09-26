@@ -13,6 +13,7 @@
     "unocss": "^66.5.2"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.387"
+    "@iconify/json": "^2.2.387",
+    "terser": "^5.44.0"
   }
 }

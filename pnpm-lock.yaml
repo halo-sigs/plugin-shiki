@@ -32,7 +32,7 @@ importers:
         version: 5.9.2
       vite:
         specifier: npm:rolldown-vite@7.1.13
-        version: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1)
+        version: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1)
 
   scripts:
     dependencies:
@@ -53,11 +53,14 @@ importers:
         version: 3.3.1
       unocss:
         specifier: ^66.5.2
-        version: 66.5.2(postcss@8.5.6)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))
+        version: 66.5.2(postcss@8.5.6)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))
     devDependencies:
       '@iconify/json':
         specifier: ^2.2.387
         version: 2.2.387
+      terser:
+        specifier: ^5.44.0
+        version: 5.44.0
 
   ui:
     dependencies:
@@ -82,7 +85,7 @@ importers:
     devDependencies:
       '@halo-dev/ui-plugin-bundler-kit':
         specifier: ^2.21.2
-        version: 2.21.2(@rsbuild/core@1.5.12)(@rsbuild/plugin-vue@1.1.2(@rsbuild/core@1.5.12)(esbuild@0.25.10)(vue@3.5.21(typescript@5.9.2)))(@vitejs/plugin-vue@6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2)))(axios@1.7.3)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))
+        version: 2.21.2(@rsbuild/core@1.5.12)(@rsbuild/plugin-vue@1.1.2(@rsbuild/core@1.5.12)(esbuild@0.25.10)(vue@3.5.21(typescript@5.9.2)))(@vitejs/plugin-vue@6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2)))(axios@1.7.3)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))
       '@rsbuild/core':
         specifier: ^1.5.12
         version: 1.5.12
@@ -2102,6 +2105,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  terser@5.44.0:
+    resolution: {integrity: sha512-nIVck8DK+GM/0Frwd+nIhZ84pR/BX7rmXMfYwyg+Sri5oGVE99/E3KvXqpC2xHFxyqXyGHTKBSioxxplrO4I4w==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   tinyexec@1.0.1:
     resolution: {integrity: sha512-5uC6DDlmeqiOwCPmK9jMSdOuZTh8bU39Ys6yidB+UTt5hfZUPGAypSgFRiEp+jbi9qH40BLDvy85jIU88wKSqw==}
 
@@ -2542,14 +2550,14 @@ snapshots:
     transitivePeerDependencies:
       - '@nuxt/kit'
 
-  '@halo-dev/ui-plugin-bundler-kit@2.21.2(@rsbuild/core@1.5.12)(@rsbuild/plugin-vue@1.1.2(@rsbuild/core@1.5.12)(esbuild@0.25.10)(vue@3.5.21(typescript@5.9.2)))(@vitejs/plugin-vue@6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2)))(axios@1.7.3)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))':
+  '@halo-dev/ui-plugin-bundler-kit@2.21.2(@rsbuild/core@1.5.12)(@rsbuild/plugin-vue@1.1.2(@rsbuild/core@1.5.12)(esbuild@0.25.10)(vue@3.5.21(typescript@5.9.2)))(@vitejs/plugin-vue@6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2)))(axios@1.7.3)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))':
     dependencies:
       '@halo-dev/api-client': 2.21.1(axios@1.7.3)
       '@rsbuild/core': 1.5.12
       '@rsbuild/plugin-vue': 1.1.2(@rsbuild/core@1.5.12)(esbuild@0.25.10)(vue@3.5.21(typescript@5.9.2))
-      '@vitejs/plugin-vue': 6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2))
+      '@vitejs/plugin-vue': 6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2))
       js-yaml: 4.1.0
-      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1)
+      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1)
     transitivePeerDependencies:
       - axios
 
@@ -3066,13 +3074,13 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@unocss/astro@66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))':
+  '@unocss/astro@66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))':
     dependencies:
       '@unocss/core': 66.5.2
       '@unocss/reset': 66.5.2
-      '@unocss/vite': 66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))
+      '@unocss/vite': 66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))
     optionalDependencies:
-      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1)
+      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1)
 
   '@unocss/cli@66.5.2':
     dependencies:
@@ -3202,7 +3210,7 @@ snapshots:
     dependencies:
       '@unocss/core': 66.5.2
 
-  '@unocss/vite@66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))':
+  '@unocss/vite@66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))':
     dependencies:
       '@jridgewell/remapping': 2.3.5
       '@unocss/config': 66.5.2
@@ -3213,12 +3221,12 @@ snapshots:
       pathe: 2.0.3
       tinyglobby: 0.2.15
       unplugin-utils: 0.3.0
-      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1)
+      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1)
 
-  '@vitejs/plugin-vue@6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2))':
+  '@vitejs/plugin-vue@6.0.1(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.21(typescript@5.9.2))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.29
-      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1)
+      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1)
       vue: 3.5.21(typescript@5.9.2)
 
   '@vue/compiler-core@3.5.21':
@@ -4172,7 +4180,7 @@ snapshots:
 
   rfdc@1.4.1: {}
 
-  rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1):
+  rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1):
     dependencies:
       '@oxc-project/runtime': 0.92.0
       fdir: 6.5.0(picomatch@4.0.3)
@@ -4187,7 +4195,7 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.0
       sass: 1.78.0
-      terser: 5.31.5
+      terser: 5.44.0
       yaml: 2.8.1
 
   rolldown@1.0.0-beta.40:
@@ -4338,6 +4346,13 @@ snapshots:
       commander: 2.20.3
       source-map-support: 0.5.21
 
+  terser@5.44.0:
+    dependencies:
+      '@jridgewell/source-map': 0.3.6
+      acorn: 8.15.0
+      commander: 2.20.3
+      source-map-support: 0.5.21
+
   tinyexec@1.0.1: {}
 
   tinyglobby@0.2.15:
@@ -4397,9 +4412,9 @@ snapshots:
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
 
-  unocss@66.5.2(postcss@8.5.6)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1)):
+  unocss@66.5.2(postcss@8.5.6)(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
-      '@unocss/astro': 66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))
+      '@unocss/astro': 66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))
       '@unocss/cli': 66.5.2
       '@unocss/core': 66.5.2
       '@unocss/postcss': 66.5.2(postcss@8.5.6)
@@ -4417,9 +4432,9 @@ snapshots:
       '@unocss/transformer-compile-class': 66.5.2
       '@unocss/transformer-directives': 66.5.2
       '@unocss/transformer-variant-group': 66.5.2
-      '@unocss/vite': 66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1))
+      '@unocss/vite': 66.5.2(rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1))
     optionalDependencies:
-      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.31.5)(yaml@2.8.1)
+      vite: rolldown-vite@7.1.13(@types/node@20.19.17)(esbuild@0.25.10)(jiti@2.6.0)(sass@1.78.0)(terser@5.44.0)(yaml@2.8.1)
     transitivePeerDependencies:
       - postcss
       - supports-color
