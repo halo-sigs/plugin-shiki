@@ -65,7 +65,7 @@ const activeColorScheme = ref<ColorScheme>("light");
 watch(
   () => activeColorScheme.value,
   (value) => {
-    document.documentElement.classList.toggle("dark", value === "dark");
+    document.documentElement.dataset.colorScheme = value;
   },
 );
 
