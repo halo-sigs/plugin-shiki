@@ -4,7 +4,7 @@ metadata:
   name: shiki
   annotations:
     # Add supports for Halo App Store
-    # https://halo.run/store/apps/app-kzloktzn
+    # https://www.halo.run/store/apps/app-kzloktzn
     "store.halo.run/app-id": "app-kzloktzn"
 spec:
   enabled: true
