@@ -112,13 +112,12 @@ console.log('goodbye')
 
 插件支持分别为暗色和亮色模式设置代码高亮风格，但仍然需要主题提供适配，适配方案：
 
-- 在 html 或者 body 标签添加 class：
-   1. `color-scheme-auto`：自动模式，根据系统的暗黑模式自动切换。
-   2. `color-scheme-dark` / `dark`：强制暗黑模式。
-   3. `color-scheme-light` / `light`：强制明亮模式。
-- 在 html 或者 body 标签添加 `data-color-scheme` 属性：
-   1. `auto`：自动模式，根据系统的暗黑模式自动切换。
-   2. `dark`：强制暗黑模式。
-   3. `light`：强制明亮模式。
+1. 默认情况下，会使用亮色模式渲染代码块。
+2. 如果需要在主题的暗黑模式下让代码块使用暗色模式，需要：
+   - 在 html / body 标签中添加 `class="dark"` 或者 `class="color-scheme-dark"`
+   - 或者在 html / body 标签中添加 `data-color-scheme="dark"`
+3. 如果你的主题支持根据操作系统自动切换模式，需要：
+   - 在 html / body 标签中添加 `class="color-scheme-auto"`
+   - 或者在 html / body 标签中添加 `data-color-scheme="auto"`
 
-任选其一即可，如果你的主题已经满足上面的要求，可以不做任何改动。
+如果你的主题已经满足上面的要求，可以不做任何改动。
