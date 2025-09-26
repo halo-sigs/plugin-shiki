@@ -2,6 +2,10 @@ apiVersion: plugin.halo.run/v1alpha1
 kind: Plugin
 metadata:
   name: shiki
+  annotations:
+    # Add supports for Halo App Store
+    # https://www.halo.run/store/apps/app-kzloktzn
+    "store.halo.run/app-id": "app-kzloktzn"
 spec:
   enabled: true
   requires: ">=2.17.0"
@@ -9,7 +13,9 @@ spec:
     name: Halo
     website: https://github.com/halo-dev
   logo: logo.svg
-  homepage: https://github.com/halo-sigs/plugin-shiki#readme
+  settingName: plugin-shiki-settings
+  configMapName: plugin-shiki-configMap
+  homepage: https://www.halo.run/store/apps/app-kzloktzn
   repo: https://github.com/halo-sigs/plugin-shiki
   issues: https://github.com/halo-sigs/plugin-shiki/issues
   displayName: "Shiki 代码高亮"

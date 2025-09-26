@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "gen:theme-list": "node generate-themes-for-settings-file.mjs"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

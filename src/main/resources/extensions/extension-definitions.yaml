@@ -1,0 +1,19 @@
+apiVersion: plugin.halo.run/v1alpha1
+kind: ExtensionDefinition
+metadata:
+  name: post-content-shiki-handler
+spec:
+  className: run.halo.shiki.ShikiPostContentHandler
+  extensionPointName: reactive-post-content-handler
+  displayName: "Shiki 代码高亮处理器"
+  description: "使用 Shiki 进行代码高亮的文章内容处理器"
+---
+apiVersion: plugin.halo.run/v1alpha1
+kind: ExtensionDefinition
+metadata:
+  name: singlepage-content-shiki-handler
+spec:
+  className: run.halo.shiki.ShikiSinglePageContentHandler
+  extensionPointName: reactive-singlepage-content-handler
+  displayName: "Shiki 代码高亮处理器"
+  description: "使用 Shiki 进行代码高亮的页面内容处理器"

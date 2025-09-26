@@ -1,14 +1,14 @@
 // The code comes from https://github.com/timomeh/tiptap-extension-code-block-shiki/blob/main/lib/highlighter.ts
 
+import { findChildren, type PMNode } from "@halo-dev/richtext-editor";
 import {
-  createHighlighter,
-  type Highlighter,
   type BundledLanguage,
   type BundledTheme,
   bundledLanguages,
   bundledThemes,
+  createHighlighter,
+  type Highlighter,
 } from "shiki";
-import { findChildren, type PMNode } from "@halo-dev/richtext-editor";
 
 let highlighter: Highlighter | undefined;
 let highlighterPromise: Promise<void> | undefined;

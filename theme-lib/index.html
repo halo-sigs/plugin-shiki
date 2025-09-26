@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite + Lit + TS</title>
+        <script type="module" src="/src/shiki-code.ts"></script>
+        <style>
+            shiki-code > pre {
+                filter: blur(10px) !important;
+                padding: 1rem !important;
+            }
+        </style>
+    </head>
+    <body data-color-scheme="auto">
+        <shiki-code variant="mac">
+            <pre><code class="language-YAML">meilisearch:
+  // [!code --]
+  image: getmeili/meilisearch:v1.15
+  // [!code ++]
+  restart: on-failure:3
+  // [!code error]
+  networks:
+    - halo_network
+  volumes:
+  // [!code highlight]
+    - ./meilisearch-data:/meili_data
+  environment:
+   // [!code focus]
+    - MEILI_ENV=production
+    - MEILI_MASTER_KEY=&lt;your-super-secret-master-key-here&gt;</code></pre>
+        </shiki-code>
+        <shiki-code>
+            <pre>
+            <code class="language-ts">import { ref } from 'vue'
+import { useState } from "react"
+
+console.log("Hi! Shiki + Twoslash on CDN :)")
+
+const count = ref(0)
+</code>
+        </pre>
+        </shiki-code>
+    </body>
+</html>
