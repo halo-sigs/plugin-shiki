@@ -2,6 +2,8 @@
 
 适用于 Halo 的 [Shiki](https://shiki.style/) 代码高亮插件，为文章等内容的代码块提供高亮渲染支持。
 
+![Cover](./images/cover.png)
+
 ## 特性
 
 - 支持 200+ 种编程语言的代码高亮，详见：[Languages | Shiki](https://shiki.style/languages)。
