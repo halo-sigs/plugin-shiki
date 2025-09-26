@@ -214,7 +214,7 @@ export class ShikiCode extends LitElement {
         ?.assignedElements()
         .forEach((el) => {
           if (el instanceof HTMLElement) {
-            el.style.display = "none";
+            el.setAttribute("style", "display: none !important;");
           }
         });
       this.loading = false;
@@ -228,7 +228,7 @@ export class ShikiCode extends LitElement {
       for (let j = 0; j < supportedClasses.length; j++) {
         const supportedClass = supportedClasses[j];
         if (className.startsWith(supportedClass)) {
-          return className.substring(supportedClass.length);
+          return className.substring(supportedClass.length).toLowerCase();
         }
       }
     }

@@ -1,5 +1,5 @@
 .shiki {
-  padding: 0.875rem;
+  padding: 0.875em;
   overflow-x: auto;
 }
 
@@ -9,6 +9,7 @@ code {
   width: max-content;
   position: relative;
   min-width: 100%;
+  font-size: 0.875em;
 }
 
 code {
