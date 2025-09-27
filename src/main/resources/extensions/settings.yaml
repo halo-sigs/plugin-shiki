@@ -25,6 +25,9 @@ spec:
           autoSelect: false
           multiple: true
           help: 默认情况下，此插件只会对文章和页面的内容生效，如果你希望在其他路径下也启用主题侧渲染，可以在这里添加额外的路径模式，支持通配符（*）。例如：/docs/** 表示 /docs/ 下的所有内容。
+          value:
+            - /moments/**
+            - /docs/**
           options:
             - label: 瞬间（/moments/**）
               value: /moments/**
