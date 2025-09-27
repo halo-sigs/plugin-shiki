@@ -29,10 +29,10 @@ export class ShikiCode extends LitElement {
   languageName = "";
 
   @state()
-  shikiLightThemeRegistration: ThemeRegistrationResolved | null = null;
+  lightThemeRegistration: ThemeRegistrationResolved | null = null;
 
   @state()
-  shikiDarkThemeRegistration: ThemeRegistrationResolved | null = null;
+  darkThemeRegistration: ThemeRegistrationResolved | null = null;
 
   @state()
   code = "";
@@ -48,6 +48,12 @@ export class ShikiCode extends LitElement {
 
   @state()
   private _colorScheme: ColorScheme = "light";
+
+  get _themeRegistration() {
+    return this._colorScheme === "dark"
+      ? this.darkThemeRegistration
+      : this.lightThemeRegistration;
+  }
 
   connectedCallback(): void {
     this._media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -123,23 +129,15 @@ export class ShikiCode extends LitElement {
       return html`<div class="text-sm text-red-500">错误: ${this.error}</div>`;
     }
 
-    const fg =
-      this._colorScheme === "dark"
-        ? this.shikiDarkThemeRegistration?.fg
-        : this.shikiLightThemeRegistration?.fg;
-    const bg =
-      this._colorScheme === "dark"
-        ? this.shikiDarkThemeRegistration?.bg
-        : this.shikiLightThemeRegistration?.bg;
-
     if (this.variant === "mac") {
       return html`<shiki-code-mac-variant
         .code=${this.code}
         .html=${this.html}
         .languageName=${this.languageName}
-        .fg=${fg}
-        .bg=${bg}
+        .fg=${this._themeRegistration?.fg}
+        .bg=${this._themeRegistration?.bg}
         .colorScheme=${this._colorScheme}
+        .themeType=${this._themeRegistration?.type}
       ></shiki-code-mac-variant>`;
     }
 
@@ -148,9 +146,10 @@ export class ShikiCode extends LitElement {
         .code=${this.code}
         .html=${this.html}
         .languageName=${this.languageName}
-        .fg=${fg}
-        .bg=${bg}
+        .fg=${this._themeRegistration?.fg}
+        .bg=${this._themeRegistration?.bg}
         .colorScheme=${this._colorScheme}
+        .themeType=${this._themeRegistration?.type}
       ></shiki-code-simple-variant>`;
     }
   }
@@ -200,8 +199,8 @@ export class ShikiCode extends LitElement {
       }
 
       // Get shiki theme registration
-      this.shikiLightThemeRegistration = highlighter.getTheme(this.lightTheme);
-      this.shikiDarkThemeRegistration = highlighter.getTheme(
+      this.lightThemeRegistration = highlighter.getTheme(this.lightTheme);
+      this.darkThemeRegistration = highlighter.getTheme(
         this.darkTheme || this.lightTheme,
       );
     } catch (error) {

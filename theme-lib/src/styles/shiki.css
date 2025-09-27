@@ -1,6 +1,7 @@
 .shiki {
   padding: 0.875em;
   overflow-x: auto;
+  color-scheme: var(--shiki-theme-type, light);
 }
 
 code {

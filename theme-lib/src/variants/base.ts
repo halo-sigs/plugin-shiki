@@ -17,6 +17,9 @@ export class ShikiCodeBaseVariant extends LitElement {
   bg?: string = "#fff";
 
   @property({ type: String })
+  themeType?: "light" | "dark" = "light";
+
+  @property({ type: String })
   languageName?: string = "";
 
   @state()
@@ -30,6 +33,9 @@ export class ShikiCodeBaseVariant extends LitElement {
   protected updated(_changedProperties: PropertyValues): void {
     if (_changedProperties.has("colorScheme")) {
       this.setAttribute("color-scheme", this.colorScheme);
+    }
+    if (_changedProperties.has("themeType")) {
+      this.style.setProperty("--shiki-theme-type", this.themeType || "light");
     }
   }
 
