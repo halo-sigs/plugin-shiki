@@ -3,7 +3,7 @@ import {
   type ExtensionCodeBlockOptions,
 } from "@halo-dev/richtext-editor";
 import type { BundledLanguage, BundledTheme } from "shiki";
-import { shikiLanguages } from "./shiki";
+import { fixedLanguages, shikiLanguages } from "./shiki";
 import { ShikiPlugin } from "./shiki-plugin";
 
 export interface CodeBlockShikiOptions extends ExtensionCodeBlockOptions {
@@ -15,7 +15,7 @@ export default ExtensionCodeBlock.extend<CodeBlockShikiOptions>({
   addOptions() {
     return {
       ...this.parent?.(),
-      languages: shikiLanguages,
+      languages: [...fixedLanguages, ...shikiLanguages],
       defaultLanguage: null,
       defaultTheme: "github-light",
     };
