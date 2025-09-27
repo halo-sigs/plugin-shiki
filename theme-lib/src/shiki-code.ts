@@ -4,7 +4,7 @@ import { property, state } from "lit/decorators.js";
 import type { ThemeRegistrationResolved } from "shiki";
 import "./variants/simple";
 import "./variants/mac";
-import type { ColorScheme } from "./types";
+import type { ColorScheme, VariantOptions } from "./types";
 
 export class ShikiCode extends LitElement {
   @property({ type: String, attribute: "light-theme" })
@@ -129,28 +129,20 @@ export class ShikiCode extends LitElement {
       return html`<div class="text-sm text-red-500">错误: ${this.error}</div>`;
     }
 
+    const options: VariantOptions = {
+      code: this.code,
+      html: this.html,
+      languageName: this.languageName,
+      colorScheme: this._colorScheme,
+      theme: this._themeRegistration,
+    };
+
     if (this.variant === "mac") {
-      return html`<shiki-code-mac-variant
-        .code=${this.code}
-        .html=${this.html}
-        .languageName=${this.languageName}
-        .fg=${this._themeRegistration?.fg}
-        .bg=${this._themeRegistration?.bg}
-        .colorScheme=${this._colorScheme}
-        .themeType=${this._themeRegistration?.type}
-      ></shiki-code-mac-variant>`;
+      return html`<shiki-code-mac-variant .options=${options}></shiki-code-mac-variant>`;
     }
 
     if (this.variant === "simple") {
-      return html`<shiki-code-simple-variant
-        .code=${this.code}
-        .html=${this.html}
-        .languageName=${this.languageName}
-        .fg=${this._themeRegistration?.fg}
-        .bg=${this._themeRegistration?.bg}
-        .colorScheme=${this._colorScheme}
-        .themeType=${this._themeRegistration?.type}
-      ></shiki-code-simple-variant>`;
+      return html`<shiki-code-simple-variant .options=${options}></shiki-code-simple-variant>`;
     }
   }
 

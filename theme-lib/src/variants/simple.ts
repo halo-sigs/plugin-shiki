@@ -9,25 +9,25 @@ export class ShikiCodeSimpleVariant extends ShikiCodeBaseVariant {
   override render() {
     return html`
       <div class="shadow rounded-lg relative group">
-        ${unsafeHTML(this.html)}
+        ${unsafeHTML(this.options.html)}
         <div
           class="absolute select-none top-1 text-xs right-2 group-hover:opacity-0 transition-opacity"
-          style="color: ${this.fg}"
+          style="color: ${this.options.theme?.fg}"
         >
-          ${this.languageName}
+          ${this.options.languageName}
         </div>
         <button
           class="opacity-0 z-2 select-none group-hover:opacity-100 transition-opacity absolute top-2 rounded right-2 size-8 inline-flex items-center justify-center"
-          style="background-color: ${this.bg};"
+          style="background-color: ${this.options.theme?.bg};"
           @click=${this.handleCopyCode}
           tabindex="-1"
         >
           ${when(
             this.copied,
             () =>
-              html`<i class="i-tabler-check block" style="color: ${this.fg}"></i>`,
+              html`<i class="i-tabler-check block" style="color: ${this.options.theme?.fg}"></i>`,
             () =>
-              html`<i class="i-tabler-copy block" style="color: ${this.fg}"></i>`,
+              html`<i class="i-tabler-copy block" style="color: ${this.options.theme?.fg}"></i>`,
           )}
         </button>
       </div>
