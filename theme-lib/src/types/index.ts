@@ -8,4 +8,5 @@ export interface VariantOptions {
   languageName: string;
   colorScheme: ColorScheme;
   theme: ThemeRegistration | null;
+  fontSize: string;
 }

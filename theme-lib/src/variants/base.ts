@@ -11,6 +11,7 @@ export class ShikiCodeBaseVariant extends LitElement {
     languageName: "Unknown",
     colorScheme: "light",
     theme: null,
+    fontSize: "0.875em",
   };
 
   @state()
@@ -23,6 +24,7 @@ export class ShikiCodeBaseVariant extends LitElement {
         "--shiki-theme-type",
         this.options.theme?.type || "light",
       );
+      this.style.setProperty("--font-size", this.options.fontSize || "0.875em");
     }
   }
 

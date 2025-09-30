@@ -16,6 +16,9 @@ export class ShikiCode extends LitElement {
   @property({ type: String })
   variant: "simple" | "mac" = "simple";
 
+  @property({ type: String, attribute: "font-size" })
+  fontSize: string = "0.875em";
+
   @state()
   loading = true;
 
@@ -135,6 +138,7 @@ export class ShikiCode extends LitElement {
       languageName: this.languageName,
       colorScheme: this._colorScheme,
       theme: this._themeRegistration,
+      fontSize: this.fontSize,
     };
 
     if (this.variant === "mac") {

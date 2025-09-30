@@ -17,4 +17,6 @@ public class ShikiBasicConfig {
     private String lightTheme;
 
     private String darkTheme;
+
+    private String fontSize;
 }

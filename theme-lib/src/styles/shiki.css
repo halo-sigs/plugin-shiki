@@ -10,7 +10,7 @@ code {
   width: max-content;
   position: relative;
   min-width: 100%;
-  font-size: 0.875em;
+  font-size: var(--font-size, 0.875em);
 }
 
 code {

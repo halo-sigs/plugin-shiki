@@ -4,6 +4,7 @@ export function renderCodeBlock(options: {
   variant: string;
   lightTheme: string;
   darkTheme: string;
+  fontSize: string;
 }) {
   document.querySelectorAll("pre > code").forEach((codeElement) => {
     const preElement = codeElement.parentElement;
@@ -11,6 +12,7 @@ export function renderCodeBlock(options: {
     shikiElement.setAttribute("light-theme", options.lightTheme);
     shikiElement.setAttribute("dark-theme", options.darkTheme);
     shikiElement.setAttribute("variant", options.variant);
+    shikiElement.setAttribute("font-size", options.fontSize);
     const parent = preElement?.parentElement;
     if (!parent) {
       return;

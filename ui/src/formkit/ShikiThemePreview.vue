@@ -6,10 +6,11 @@ import { demoCode } from "../constants";
 
 type ColorScheme = "light" | "dark";
 
-const { variant, lightTheme, darkTheme } = defineProps<{
+const { variant, lightTheme, darkTheme, fontSize } = defineProps<{
   variant?: string;
   lightTheme?: string;
   darkTheme?: string;
+  fontSize?: string;
 }>();
 
 const { unload } = useScriptTag(
@@ -25,7 +26,7 @@ onUnmounted(() => {
 });
 
 const key = computed(() => {
-  return `${variant}-${lightTheme}-${darkTheme}`;
+  return `${variant}-${lightTheme}-${darkTheme}-${fontSize}`;
 });
 
 const colorSchemes: Array<{ label: string; id: ColorScheme }> = [
@@ -67,7 +68,7 @@ watch(
   <div class="shiki-preview">
     <label class="formkit-label block text-sm font-medium text-gray-700"> 预览 </label>
     <VTabbar :items="colorSchemes" type="pills" v-model:active-id="activeColorScheme"></VTabbar>
-    <shiki-code :key="key" :variant="variant" :light-theme="lightTheme" :dark-theme="darkTheme">
+    <shiki-code :key="key" :variant="variant" :light-theme="lightTheme" :dark-theme="darkTheme" :font-size="fontSize">
       <pre style="display: none">
       <code class="language-java">{{ demoCode }}</code>
     </pre>

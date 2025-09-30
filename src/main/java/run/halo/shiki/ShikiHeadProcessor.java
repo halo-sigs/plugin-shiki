@@ -89,6 +89,7 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
         properties.setProperty("lightTheme", basicConfig.getLightTheme());
         properties.setProperty("darkTheme", basicConfig.getDarkTheme());
         properties.setProperty("variant", basicConfig.getVariant());
+        properties.setProperty("fontSize", basicConfig.getFontSize());
         properties.setProperty("version", pluginContext.getVersion());
         properties.setProperty("style", Constants.PRE_STYLE);
 
@@ -100,14 +101,16 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
                 renderCodeBlock({
                     lightTheme: '${lightTheme}',
                     darkTheme: '${darkTheme}',
-                    variant: '${variant}'
+                    variant: '${variant}',
+                    fontSize: '${fontSize}'
                 });
             })
             window.addEventListener('pjax:complete', () => {
                 renderCodeBlock({
                     lightTheme: '${lightTheme}',
                     darkTheme: '${darkTheme}',
-                    variant: '${variant}'
+                    variant: '${variant}',
+                    fontSize: '${fontSize}'
                 });
             });
             </script>

@@ -2,7 +2,3 @@ packages:
   - ui
   - theme-lib
   - scripts
-
-onlyBuiltDependencies:
-  - core-js
-  - esbuild

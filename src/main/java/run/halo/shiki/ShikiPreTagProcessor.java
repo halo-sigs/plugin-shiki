@@ -17,7 +17,8 @@ public class ShikiPreTagProcessor {
                 Element shikiCodeElement = doc.createElement("shiki-code")
                     .attr("variant", basicConfig.getVariant())
                     .attr("light-theme", basicConfig.getLightTheme())
-                    .attr("dark-theme", basicConfig.getDarkTheme());
+                    .attr("dark-theme", basicConfig.getDarkTheme())
+                    .attr("font-size", basicConfig.getFontSize());
 
                 preElement.before(shikiCodeElement);
                 var newPreElement = preElement.clone();

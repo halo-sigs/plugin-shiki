@@ -307,6 +307,14 @@ spec:
               value: vitesse-dark
             - label: Vitesse Light（light）
               value: vitesse-light
+        - $formkit: text
+          if: $get(enabled).value
+          name: fontSize
+          id: fontSize
+          key: fontSize
+          label: 字体大小
+          value: 0.875em
+          help: 代码块字体大小，支持 CSS 大小单位，例如 14px、1em、1.2rem 等。
         - $cmp: ShikiThemePreview
           if: $get(enabled).value
           key: preview
@@ -314,6 +322,7 @@ spec:
             variant: $get(variant).value
             lightTheme: $get(lightTheme).value
             darkTheme: $get(darkTheme).value
+            fontSize: $get(fontSize).value
     - group: editor
       label: 编辑器设置
       formSchema:
