@@ -27,7 +27,8 @@ public class ShikiPreTagProcessor {
             }
         }
 
+        doc.outputSettings(new Document.OutputSettings().prettyPrint(false));
+
         return doc.body().html();
     }
 }
-
