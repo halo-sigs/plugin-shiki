@@ -1,0 +1,40 @@
+{
+  "name": "@halo-dev/shiki-code-element",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halo-sigs/plugin-shiki.git",
+    "directory": "shiki-code-element"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && vite build --config vite.lib.config.ts",
+    "dev": "vite --config vite.dev.config.ts",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "lit": "^3.3.1"
+  },
+  "devDependencies": {
+    "@iconify/json": "^2.2.395",
+    "@unocss/reset": "^66.5.4",
+    "unocss": "^66.5.4",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "peerDependencies": {
+    "@shikijs/transformers": "^3",
+    "shiki": "^3"
+  }
+}

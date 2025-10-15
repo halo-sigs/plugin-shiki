@@ -1,4 +1,5 @@
 {
+  "private": true,
   "scripts": {
     "gen:theme-list": "node generate-themes-for-settings-file.mjs"
   },

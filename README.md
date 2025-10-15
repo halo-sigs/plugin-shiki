@@ -121,3 +121,7 @@ console.log('goodbye')
    - 或者在 html / body 标签中添加 `data-color-scheme="auto"`
 
 如果你的主题已经满足上面的要求，可以不做任何改动。
+
+## 作为 NPM 库使用
+
+除了为 Halo 提供开箱即用的代码高亮支持，此仓库还将核心的 Shiki 高亮组件发布到了 npm，详见：<https://www.npmjs.com/package/@halo-dev/shiki-code-element>

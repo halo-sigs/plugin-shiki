@@ -1,4 +1,5 @@
 packages:
-  - ui
+  - shiki-code-element
   - theme-lib
+  - ui
   - scripts

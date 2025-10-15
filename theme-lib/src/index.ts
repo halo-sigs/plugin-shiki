@@ -1,4 +1,4 @@
-import "./shiki-code";
+import "@halo-dev/shiki-code-element";
 
 export function renderCodeBlock(options: {
   variant: string;
