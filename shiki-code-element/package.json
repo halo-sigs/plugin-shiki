@@ -6,6 +6,7 @@
     "url": "https://github.com/halo-sigs/plugin-shiki.git",
     "directory": "shiki-code-element"
   },
+  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
