@@ -3,29 +3,36 @@ package run.halo.shiki;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.jsoup.select.NodeTraversor;
+import org.jsoup.select.NodeVisitor;
 
 public class ShikiPreTagProcessor {
     static String process(String content, ShikiBasicConfig basicConfig) {
         Document doc = Jsoup.parse(content);
 
-        Elements codeElements = doc.select("pre > code");
+        NodeTraversor.traverse(new NodeVisitor() {
+            @Override
+            public void head(org.jsoup.nodes.Node node, int depth) {
+                if (node instanceof Element element 
+                    && "pre".equals(element.tagName())
+                    && element.selectFirst("> code") != null) {
+                    
+                    Element shikiCodeElement = new Element("shiki-code")
+                        .attr("variant", basicConfig.getVariant())
+                        .attr("light-theme", basicConfig.getLightTheme())
+                        .attr("dark-theme", basicConfig.getDarkTheme())
+                        .attr("font-size", basicConfig.getFontSize());
 
-        for (Element codeElement : codeElements) {
-            Element preElement = codeElement.parent();
-            if (preElement != null && "pre".equals(preElement.tagName())) {
-                Element shikiCodeElement = doc.createElement("shiki-code")
-                    .attr("variant", basicConfig.getVariant())
-                    .attr("light-theme", basicConfig.getLightTheme())
-                    .attr("dark-theme", basicConfig.getDarkTheme())
-                    .attr("font-size", basicConfig.getFontSize());
-
-                preElement.before(shikiCodeElement);
-                var newPreElement = preElement.clone();
-                shikiCodeElement.appendChild(newPreElement);
-                preElement.remove();
+                    element.replaceWith(shikiCodeElement);
+                    shikiCodeElement.appendChild(element);
+                }
             }
-        }
+
+            @Override
+            public void tail(org.jsoup.nodes.Node node, int depth) {
+                // No action needed on tail
+            }
+        }, doc);
 
         doc.outputSettings(new Document.OutputSettings().prettyPrint(false));
 
