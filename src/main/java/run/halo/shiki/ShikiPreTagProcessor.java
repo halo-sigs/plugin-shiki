@@ -3,36 +3,26 @@ package run.halo.shiki;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.NodeTraversor;
-import org.jsoup.select.NodeVisitor;
+import org.jsoup.select.Elements;
 
 public class ShikiPreTagProcessor {
     static String process(String content, ShikiBasicConfig basicConfig) {
         Document doc = Jsoup.parse(content);
 
-        NodeTraversor.traverse(new NodeVisitor() {
-            @Override
-            public void head(org.jsoup.nodes.Node node, int depth) {
-                if (node instanceof Element element 
-                    && "pre".equals(element.tagName())
-                    && element.selectFirst("> code") != null) {
-                    
-                    Element shikiCodeElement = new Element("shiki-code")
-                        .attr("variant", basicConfig.getVariant())
-                        .attr("light-theme", basicConfig.getLightTheme())
-                        .attr("dark-theme", basicConfig.getDarkTheme())
-                        .attr("font-size", basicConfig.getFontSize());
+        // Select all pre elements that have a direct code child
+        Elements preElements = doc.select("pre:has(> code)");
 
-                    element.replaceWith(shikiCodeElement);
-                    shikiCodeElement.appendChild(element);
-                }
-            }
+        // Process each pre element
+        for (Element preElement : preElements) {
+            Element shikiCodeElement = new Element("shiki-code")
+                .attr("variant", basicConfig.getVariant())
+                .attr("light-theme", basicConfig.getLightTheme())
+                .attr("dark-theme", basicConfig.getDarkTheme())
+                .attr("font-size", basicConfig.getFontSize());
 
-            @Override
-            public void tail(org.jsoup.nodes.Node node, int depth) {
-                // No action needed on tail
-            }
-        }, doc);
+            preElement.replaceWith(shikiCodeElement);
+            shikiCodeElement.appendChild(preElement);
+        }
 
         doc.outputSettings(new Document.OutputSettings().prettyPrint(false));
 
