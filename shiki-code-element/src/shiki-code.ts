@@ -174,6 +174,11 @@ export class ShikiCode extends LitElement {
         this.languageCode = "plaintext";
       }
 
+      // Fix text alias to use plaintext
+      if (this.languageCode === "text") {
+        this.languageCode = "plaintext";
+      }
+
       this.code = codeElement.textContent || "";
 
       // Render the code to HTML using Shiki
