@@ -53,8 +53,8 @@ code .line:last-child:empty::before {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: -1rem;
-  right: -1rem;
+  left: -0.875em;
+  right: -0.875em;
   background: rgb(239 68 68 / 0.15);
   border-left: 1px solid rgb(239 68 68 / 0.8);
   z-index: -1;
@@ -65,8 +65,8 @@ code .line:last-child:empty::before {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: -1rem;
-  right: -1rem;
+  left: -0.875em;
+  right: -0.875em;
   background: rgb(34 197 94 / 0.15);
   border-left: 1px solid rgb(34 197 94 / 0.8);
   z-index: -1;
@@ -90,8 +90,8 @@ code .line:last-child:empty::before {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: -1rem;
-  right: -1rem;
+  left: -0.875em;
+  right: -0.875em;
   background: rgba(101, 117, 133, 0.16);
   border-left: 1px solid rgba(34, 197, 94, 0.8);
   z-index: -1;
