@@ -298,11 +298,3 @@ export function ShikiPlugin({
 
   return shikiPlugin;
 }
-
-/**
- * 清理装饰器缓存
- * 可在需要时手动调用，比如切换主题或语言包后
- */
-export function clearDecorationsCache() {
-  tokensCache.clear();
-}
