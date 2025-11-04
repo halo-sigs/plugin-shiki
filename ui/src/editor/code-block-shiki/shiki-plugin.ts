@@ -17,6 +17,99 @@ import {
   loadTheme,
 } from "./highlighter";
 
+interface CachedTokens {
+  tokens: Array<Array<{ content: string; color: string }>>;
+  themeBg: string;
+}
+
+const tokensCache = new Map<string, CachedTokens>();
+
+function simpleHash(str: string): number {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 33) ^ str.charCodeAt(i);
+  }
+  return hash >>> 0;
+}
+
+function generateBlockHash(
+  content: string,
+  language: string,
+  theme: string,
+): string {
+  const contentHash = simpleHash(content);
+  return `${language}:${theme}:${contentHash}`;
+}
+
+function createBlockDecorations(
+  block: { node: PMNode; pos: number },
+  language: string,
+  theme: string,
+  highlighter: ReturnType<typeof getShiki>,
+): Decoration[] {
+  if (!highlighter) return [];
+
+  const content = block.node.textContent;
+  const hash = generateBlockHash(content, language, theme);
+  const decorations: Decoration[] = [];
+
+  let cachedData = tokensCache.get(hash);
+
+  if (!cachedData) {
+    const themeResolved = highlighter.getTheme(theme);
+    const rawTokens = highlighter.codeToTokensBase(content, {
+      lang: language as BundledLanguage,
+      theme: theme as BundledTheme,
+    });
+
+    const tokens = rawTokens.map((line) =>
+      line.map((token) => ({
+        content: token.content,
+        color: token.color || "#000000",
+      })),
+    );
+
+    cachedData = {
+      tokens,
+      themeBg: themeResolved.bg || "",
+    };
+
+    tokensCache.set(hash, cachedData);
+
+    if (tokensCache.size > 100) {
+      const firstKey = tokensCache.keys().next().value;
+      if (firstKey) {
+        tokensCache.delete(firstKey);
+      }
+    }
+  }
+
+  decorations.push(
+    Decoration.node(block.pos, block.pos + block.node.nodeSize, {
+      style: `background-color: ${cachedData.themeBg}`,
+    }),
+  );
+
+  let from = block.pos + 1;
+  for (const line of cachedData.tokens) {
+    for (const token of line) {
+      const to = from + token.content.length;
+
+      decorations.push(
+        Decoration.inline(from, to, {
+          style: `color: ${token.color}`,
+        }),
+      );
+
+      from = to;
+    }
+
+    from += 1;
+  }
+
+  return decorations;
+}
+
 /** Create code decorations for the current document */
 function getDecorations({
   doc,
@@ -30,16 +123,16 @@ function getDecorations({
   defaultTheme: BundledTheme;
 }) {
   const decorations: Decoration[] = [];
-
   const codeBlockCodes = findChildren(doc, (node) => node.type.name === name);
+  const highlighter = getShiki();
+
+  if (!highlighter) {
+    return DecorationSet.create(doc, decorations);
+  }
 
   codeBlockCodes.forEach((block) => {
     let language = block.node.attrs.language || defaultLanguage;
     const theme = block.node.attrs.theme || defaultTheme;
-
-    const highlighter = getShiki();
-
-    if (!highlighter) return;
 
     if (!highlighter.getLoadedLanguages().includes(language)) {
       language = "plaintext";
@@ -49,34 +142,14 @@ function getDecorations({
       ? theme
       : highlighter.getLoadedThemes()[0];
 
-    const themeResolved = highlighter.getTheme(themeToApply);
-    decorations.push(
-      Decoration.node(block.pos, block.pos + block.node.nodeSize, {
-        style: `background-color: ${themeResolved.bg}`,
-      }),
+    const blockDecorations = createBlockDecorations(
+      block,
+      language,
+      themeToApply,
+      highlighter,
     );
 
-    const tokens = highlighter.codeToTokensBase(block.node.textContent, {
-      lang: language,
-      theme: themeToApply,
-    });
-
-    let from = block.pos + 1;
-    for (const line of tokens) {
-      for (const token of line) {
-        const to = from + token.content.length;
-
-        const decoration = Decoration.inline(from, to, {
-          style: `color: ${token.color}`,
-        });
-
-        decorations.push(decoration);
-
-        from = to;
-      }
-
-      from += 1;
-    }
+    decorations.push(...blockDecorations);
   });
 
   return DecorationSet.create(doc, decorations);
@@ -184,14 +257,12 @@ export function ShikiPlugin({
             // (for example, a transaction that affects the entire document).
             // Such transactions can happen during collab syncing via y-prosemirror, for example.
             transaction.steps.some((step) => {
-              // @ts-expect-error
               return (
                 // @ts-expect-error
                 step.from !== undefined &&
                 // @ts-expect-error
                 step.to !== undefined &&
                 oldNodes.some((node) => {
-                  // @ts-expect-error
                   return (
                     // @ts-expect-error
                     node.pos >= step.from &&
@@ -201,7 +272,6 @@ export function ShikiPlugin({
                 })
               );
             }));
-
         // only create code decoration when it's necessary to do so
         if (
           transaction.getMeta("shikiPluginForceDecoration") ||
@@ -227,4 +297,12 @@ export function ShikiPlugin({
   });
 
   return shikiPlugin;
+}
+
+/**
+ * 清理装饰器缓存
+ * 可在需要时手动调用，比如切换主题或语言包后
+ */
+export function clearDecorationsCache() {
+  tokensCache.clear();
 }
