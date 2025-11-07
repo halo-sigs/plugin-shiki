@@ -7,7 +7,6 @@ export class ShikiCodeBaseVariant extends LitElement {
   @property({ type: Object })
   options: VariantOptions = {
     html: "",
-    code: "",
     languageName: "Unknown",
     colorScheme: "light",
     theme: null,
@@ -29,7 +28,9 @@ export class ShikiCodeBaseVariant extends LitElement {
   }
 
   handleCopyCode() {
-    copyText(this.options.code, () => {
+    const pre = this.shadowRoot?.querySelector("pre");
+    const code = pre?.innerText || pre?.textContent;
+    copyText(code || "", () => {
       this.copied = true;
       setTimeout(() => {
         this.copied = false;

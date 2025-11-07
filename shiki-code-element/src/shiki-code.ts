@@ -133,7 +133,6 @@ export class ShikiCode extends LitElement {
     }
 
     const options: VariantOptions = {
-      code: this.code,
       html: this.html,
       languageName: this.languageName,
       colorScheme: this._colorScheme,
