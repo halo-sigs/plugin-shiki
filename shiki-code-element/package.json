@@ -29,13 +29,13 @@
     "lit": "^3.3.1"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.395",
-    "@unocss/reset": "^66.5.4",
-    "unocss": "^66.5.4",
+    "@iconify/json": "^2.2.412",
+    "@unocss/reset": "^66.5.9",
+    "unocss": "^66.5.9",
     "vite-plugin-dts": "^4.5.4"
   },
   "peerDependencies": {
-    "@shikijs/transformers": "^3.15.x",
+    "@shikijs/transformers": "^3",
     "shiki": "^3"
   }
 }
