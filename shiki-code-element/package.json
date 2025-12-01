@@ -36,6 +36,6 @@
   },
   "peerDependencies": {
     "@shikijs/transformers": "^3.15.x",
-    "shiki": "^3.15.x"
+    "shiki": "^3"
   }
 }
