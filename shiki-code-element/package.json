@@ -26,12 +26,12 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "lit": "^3.3.1"
+    "lit": "^3.3.2"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.412",
-    "@unocss/reset": "^66.5.9",
-    "unocss": "^66.5.9",
+    "@iconify/json": "^2.2.421",
+    "@unocss/reset": "^66.5.11",
+    "unocss": "^66.5.11",
     "vite-plugin-dts": "^4.5.4"
   },
   "peerDependencies": {

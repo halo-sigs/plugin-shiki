@@ -1,5 +1,5 @@
 import { axiosInstance } from "@halo-dev/api-client";
-import { definePlugin } from "@halo-dev/console-shared";
+import { definePlugin } from "@halo-dev/ui-shared";
 import ShikiEditorPreview from "./formkit/ShikiEditorPreview.vue";
 import ShikiThemePreview from "./formkit/ShikiThemePreview.vue";
 

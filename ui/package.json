@@ -7,18 +7,18 @@
     "prettier": "prettier --write src/"
   },
   "dependencies": {
-    "@halo-dev/api-client": "^2.21.1",
-    "@halo-dev/components": "^2.21.0",
-    "@halo-dev/console-shared": "^2.21.0",
-    "@halo-dev/richtext-editor": "^2.21.0",
+    "@halo-dev/api-client": "^2.22.0",
+    "@halo-dev/components": "^2.22.0",
+    "@halo-dev/ui-shared": "^2.22.0",
+    "@halo-dev/richtext-editor": "^2.22.0",
     "@vueuse/core": "^10.11.1",
-    "vue": "^3.5.25"
+    "vue": "^3.5.26"
   },
   "devDependencies": {
-    "@halo-dev/ui-plugin-bundler-kit": "^2.21.2",
-    "@rsbuild/core": "^1.6.10",
-    "@rsbuild/plugin-vue": "^1.2.0",
+    "@halo-dev/ui-plugin-bundler-kit": "^2.22.0",
+    "@rsbuild/core": "^1.6.15",
+    "@rsbuild/plugin-vue": "^1.2.2",
     "@tsconfig/node20": "^20.1.8",
-    "@types/node": "^20.19.25"
+    "@types/node": "^20.19.27"
   }
 }
