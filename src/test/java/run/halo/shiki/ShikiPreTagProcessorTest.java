@@ -204,7 +204,8 @@ class ShikiPreTagProcessorTest {
         assertFalse(result.contains("<shiki-code"), 
             "Should not wrap mermaid code blocks when excluded");
         assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
-        assertTrue(result.contains("graph TD; A-->B;"));
+        // JSoup escapes > to &gt; in HTML output
+        assertTrue(result.contains("graph TD; A--&gt;B;"));
     }
 
     @Test
@@ -233,7 +234,8 @@ class ShikiPreTagProcessorTest {
         // Verify Mermaid and PlantUML are NOT wrapped
         assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
         assertTrue(result.contains("<pre><code class=\"language-plantuml\">"));
-        assertTrue(result.contains("graph TD; A-->B;"));
+        // JSoup escapes > to &gt; in HTML output
+        assertTrue(result.contains("graph TD; A--&gt;B;"));
     }
 
     @Test
@@ -315,7 +317,8 @@ class ShikiPreTagProcessorTest {
         assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
         
         // Verify that mermaid content appears outside of any shiki-code element
-        int mermaidIndex = result.indexOf("graph TD; A-->B;");
+        // JSoup escapes > to &gt; in HTML output
+        int mermaidIndex = result.indexOf("graph TD; A--&gt;B;");
         int lastShikiCodeClose = result.lastIndexOf("</shiki-code>");
         assertTrue(mermaidIndex > lastShikiCodeClose,
             "Mermaid code should appear after all shiki-code elements (not wrapped)");
