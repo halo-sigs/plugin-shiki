@@ -17,9 +17,22 @@ class ConstantsTest {
         assertTrue(style.contains("shiki-code pre:has(code)"),
             "Style should target 'shiki-code pre:has(code)' to avoid blurring excluded languages");
         
-        // Should not use the generic selector that would affect all code blocks
-        assertFalse(style.matches(".*(?<!shiki-code )pre:has\\(code\\).*"),
-            "Style should not use generic 'pre:has(code)' selector without shiki-code prefix");
+        // Should not contain a standalone pre:has(code) selector
+        // Extract just the CSS rules part (between <style> tags)
+        String cssContent = style.substring(style.indexOf(">") + 1, style.lastIndexOf("</style>"));
+        
+        // Count occurrences of pre:has(code) - should only appear once with shiki-code prefix
+        int preHasCodeCount = 0;
+        int index = 0;
+        while ((index = cssContent.indexOf("pre:has(code)", index)) != -1) {
+            preHasCodeCount++;
+            index++;
+        }
+        assertEquals(1, preHasCodeCount, "Should have exactly one 'pre:has(code)' occurrence");
+        
+        // Verify it's prefixed with shiki-code
+        assertTrue(cssContent.indexOf("shiki-code") < cssContent.indexOf("pre:has(code)"),
+            "The 'pre:has(code)' should be prefixed with 'shiki-code'");
         
         // Should contain the blur filter
         assertTrue(style.contains("filter: blur(10px)"),

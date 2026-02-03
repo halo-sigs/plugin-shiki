@@ -313,8 +313,12 @@ class ShikiPreTagProcessorTest {
         // Mermaid code should NOT be wrapped in shiki-code (won't be affected by blur style)
         // The blur style uses selector "shiki-code pre:has(code)", so bare pre>code won't match
         assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
-        assertFalse(result.contains("<shiki-code") && result.contains("mermaid"),
-            "Mermaid code block should not be wrapped in shiki-code element");
+        
+        // Verify that mermaid content appears outside of any shiki-code element
+        int mermaidIndex = result.indexOf("graph TD; A-->B;");
+        int lastShikiCodeClose = result.lastIndexOf("</shiki-code>");
+        assertTrue(mermaidIndex > lastShikiCodeClose,
+            "Mermaid code should appear after all shiki-code elements (not wrapped)");
         
         // Verify the structure difference:
         // Wrapped: <shiki-code><pre><code>...</code></pre></shiki-code>
