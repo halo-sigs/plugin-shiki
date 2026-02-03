@@ -34,6 +34,29 @@ spec:
             - label: Docsme 文档（/docs/**）
               value: /docs/**
         - $formkit: select
+          label: 排除语言
+          if: $get(enabled).value
+          name: excludedLanguages
+          id: excludedLanguages
+          key: excludedLanguages
+          allowCreate: true
+          searchable: true
+          clearable: true
+          autoSelect: false
+          multiple: true
+          help: 排除指定语言的代码块不进行 Shiki 高亮渲染，适用于需要其他插件处理的特定语言（如 mermaid、plantuml 等）。排除的代码块将保留原始的 pre>code 结构，不被 shiki-code 元素包裹。
+          options:
+            - label: Mermaid
+              value: mermaid
+            - label: PlantUML
+              value: plantuml
+            - label: D2
+              value: d2
+            - label: Graphviz
+              value: graphviz
+            - label: ABC 乐谱
+              value: abc
+        - $formkit: select
           if: $get(enabled).value
           name: variant
           id: variant

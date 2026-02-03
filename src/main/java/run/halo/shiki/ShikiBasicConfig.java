@@ -19,4 +19,6 @@ public class ShikiBasicConfig {
     private String darkTheme;
 
     private String fontSize;
+
+    private List<String> excludedLanguages; // mermaid, plantuml, etc.
 }
