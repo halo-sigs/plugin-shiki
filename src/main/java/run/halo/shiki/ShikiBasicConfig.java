@@ -20,5 +20,11 @@ public class ShikiBasicConfig {
 
     private String fontSize;
 
-    private List<String> excludedLanguages; // mermaid, plantuml, etc.
+    /**
+     * List of language codes to exclude from Shiki highlighting.
+     * Code blocks with these languages will maintain their original pre>code structure
+     * and can be processed by other plugins or JavaScript libraries.
+     * Examples: mermaid, plantuml, d2, graphviz
+     */
+    private List<String> excludedLanguages;
 }
