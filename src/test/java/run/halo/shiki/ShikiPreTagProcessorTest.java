@@ -291,6 +291,40 @@ class ShikiPreTagProcessorTest {
         assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
     }
 
+    @Test
+    void excludedLanguagesShouldNotBeAffectedByBlurStyle() {
+        // This test verifies that excluded languages maintain their structure
+        // so they won't be affected by the shiki-code-specific blur filter
+        basicConfig.setExcludedLanguages(java.util.List.of("mermaid"));
+        
+        String input = """
+            <div>
+                <pre><code class="language-java">System.out.println("test");</code></pre>
+                <pre><code class="language-mermaid">graph TD; A-->B;</code></pre>
+            </div>
+            """;
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        // Java code should be wrapped in shiki-code (will be affected by blur style)
+        assertTrue(result.contains("<shiki-code"));
+        assertTrue(result.contains("System.out.println"));
+        
+        // Mermaid code should NOT be wrapped in shiki-code (won't be affected by blur style)
+        // The blur style uses selector "shiki-code pre:has(code)", so bare pre>code won't match
+        assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
+        assertFalse(result.contains("<shiki-code") && result.contains("mermaid"),
+            "Mermaid code block should not be wrapped in shiki-code element");
+        
+        // Verify the structure difference:
+        // Wrapped: <shiki-code><pre><code>...</code></pre></shiki-code>
+        // Not wrapped: <pre><code>...</code></pre>
+        int preTags = countOccurrences(result, "<pre>");
+        int shikiCodeTags = countOccurrences(result, "<shiki-code");
+        assertEquals(2, preTags, "Should have 2 pre tags total");
+        assertEquals(1, shikiCodeTags, "Should have only 1 shiki-code tag (for Java, not mermaid)");
+    }
+
     private int countOccurrences(String str, String substring) {
         int count = 0;
         int index = 0;
