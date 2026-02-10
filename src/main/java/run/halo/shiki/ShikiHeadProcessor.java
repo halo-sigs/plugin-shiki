@@ -91,7 +91,7 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
         properties.setProperty("variant", basicConfig.getVariant());
         properties.setProperty("fontSize", basicConfig.getFontSize());
         properties.setProperty("version", pluginContext.getVersion());
-        properties.setProperty("style", Constants.PRE_STYLE);
+        properties.setProperty("style", Constants.generatePreStyle(basicConfig.getExcludedLanguages()));
 
         return PROPERTY_PLACEHOLDER_HELPER.replacePlaceholders("""
             ${style}
