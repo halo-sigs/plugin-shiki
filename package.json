@@ -13,18 +13,18 @@
     ]
   },
   "dependencies": {
-    "@shikijs/transformers": "^3.20.0",
-    "shiki": "^3.20.0"
+    "@shikijs/transformers": "^3.22.0",
+    "shiki": "^3.22.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.1",
     "typescript": "~5.9.3",
-    "vite": "^8.0.0-beta.5"
+    "vite": "^8.0.0-beta.13"
   },
-  "packageManager": "pnpm@10.26.2",
+  "packageManager": "pnpm@10.29.2",
   "pnpm": {
     "onlyBuiltDependencies": [
       "core-js",

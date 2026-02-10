@@ -85,6 +85,10 @@ spec:
               value: aurora-x
             - label: Ayu Dark（dark）
               value: ayu-dark
+            - label: Ayu Light（light）
+              value: ayu-light
+            - label: Ayu Mirage（dark）
+              value: ayu-mirage
             - label: Catppuccin Frappé（dark）
               value: catppuccin-frappe
             - label: Catppuccin Latte（light）
@@ -129,6 +133,8 @@ spec:
               value: gruvbox-light-medium
             - label: Gruvbox Light Soft（light）
               value: gruvbox-light-soft
+            - label: Horizon（dark）
+              value: horizon
             - label: Houston（dark）
               value: houston
             - label: Kanagawa Dragon（dark）
@@ -159,6 +165,8 @@ spec:
               value: monokai
             - label: Night Owl（dark）
               value: night-owl
+            - label: Night Owl Light（light）
+              value: night-owl-light
             - label: Nord（dark）
               value: nord
             - label: One Dark Pro（dark）
@@ -216,6 +224,10 @@ spec:
               value: aurora-x
             - label: Ayu Dark（dark）
               value: ayu-dark
+            - label: Ayu Light（light）
+              value: ayu-light
+            - label: Ayu Mirage（dark）
+              value: ayu-mirage
             - label: Catppuccin Frappé（dark）
               value: catppuccin-frappe
             - label: Catppuccin Latte（light）
@@ -260,6 +272,8 @@ spec:
               value: gruvbox-light-medium
             - label: Gruvbox Light Soft（light）
               value: gruvbox-light-soft
+            - label: Horizon（dark）
+              value: horizon
             - label: Houston（dark）
               value: houston
             - label: Kanagawa Dragon（dark）
@@ -290,6 +304,8 @@ spec:
               value: monokai
             - label: Night Owl（dark）
               value: night-owl
+            - label: Night Owl Light（light）
+              value: night-owl-light
             - label: Nord（dark）
               value: nord
             - label: One Dark Pro（dark）
@@ -364,6 +380,10 @@ spec:
               value: aurora-x
             - label: Ayu Dark（dark）
               value: ayu-dark
+            - label: Ayu Light（light）
+              value: ayu-light
+            - label: Ayu Mirage（dark）
+              value: ayu-mirage
             - label: Catppuccin Frappé（dark）
               value: catppuccin-frappe
             - label: Catppuccin Latte（light）
@@ -408,6 +428,8 @@ spec:
               value: gruvbox-light-medium
             - label: Gruvbox Light Soft（light）
               value: gruvbox-light-soft
+            - label: Horizon（dark）
+              value: horizon
             - label: Houston（dark）
               value: houston
             - label: Kanagawa Dragon（dark）
@@ -438,6 +460,8 @@ spec:
               value: monokai
             - label: Night Owl（dark）
               value: night-owl
+            - label: Night Owl Light（light）
+              value: night-owl-light
             - label: Nord（dark）
               value: nord
             - label: One Dark Pro（dark）
