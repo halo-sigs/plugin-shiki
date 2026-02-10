@@ -36,6 +36,7 @@ public class ShikiSinglePageContentHandler implements ReactiveSinglePageContentH
         ShikiBasicConfig basicConfig) {
         var processedContent =
             ShikiPreTagProcessor.process(contentContext.getContent(), basicConfig);
-        contentContext.setContent(Constants.PRE_STYLE + processedContent);
+        var preStyle = Constants.generatePreStyle(basicConfig.getExcludedLanguages());
+        contentContext.setContent(preStyle + processedContent);
     }
 }

@@ -194,6 +194,144 @@ class ShikiPreTagProcessorTest {
         assertFalse(result2.contains("<shiki-code"));
     }
 
+    @Test
+    void shouldExcludeMermaidLanguage() {
+        basicConfig.setExcludedLanguages(java.util.List.of("mermaid"));
+        String input = "<pre><code class=\"language-mermaid\">graph TD; A-->B;</code></pre>";
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        assertFalse(result.contains("<shiki-code"), 
+            "Should not wrap mermaid code blocks when excluded");
+        assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
+        // JSoup escapes > to &gt; in HTML output
+        assertTrue(result.contains("graph TD; A--&gt;B;"));
+    }
+
+    @Test
+    void shouldExcludeMultipleLanguages() {
+        basicConfig.setExcludedLanguages(java.util.List.of("mermaid", "plantuml", "d2"));
+        
+        String input = """
+            <div>
+                <pre><code class="language-java">System.out.println("Hello");</code></pre>
+                <pre><code class="language-mermaid">graph TD; A-->B;</code></pre>
+                <pre><code class="language-plantuml">@startuml\\nA -> B\\n@enduml</code></pre>
+                <pre><code class="language-python">print("World")</code></pre>
+            </div>
+            """;
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        // Should wrap Java and Python but not Mermaid or PlantUML
+        int shikiCodeCount = countOccurrences(result, "<shiki-code");
+        assertEquals(2, shikiCodeCount, "Should only wrap non-excluded languages");
+        
+        // Verify Java and Python are wrapped
+        assertTrue(result.contains("System.out.println"));
+        assertTrue(result.contains("print(\"World\")"));
+        
+        // Verify Mermaid and PlantUML are NOT wrapped
+        assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
+        assertTrue(result.contains("<pre><code class=\"language-plantuml\">"));
+        // JSoup escapes > to &gt; in HTML output
+        assertTrue(result.contains("graph TD; A--&gt;B;"));
+    }
+
+    @Test
+    void shouldBeCaseInsensitiveForExcludedLanguages() {
+        basicConfig.setExcludedLanguages(java.util.List.of("MeRmAiD"));
+        String input = "<pre><code class=\"language-mermaid\">graph TD; A-->B;</code></pre>";
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        assertFalse(result.contains("<shiki-code"), 
+            "Should handle case-insensitive language exclusion");
+        assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
+    }
+
+    @Test
+    void shouldHandleEmptyExclusionList() {
+        basicConfig.setExcludedLanguages(java.util.List.of());
+        String input = "<pre><code class=\"language-mermaid\">graph TD; A-->B;</code></pre>";
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        assertTrue(result.contains("<shiki-code"), 
+            "Should wrap all code blocks when exclusion list is empty");
+    }
+
+    @Test
+    void shouldHandleNullExclusionList() {
+        basicConfig.setExcludedLanguages(null);
+        String input = "<pre><code class=\"language-mermaid\">graph TD; A-->B;</code></pre>";
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        assertTrue(result.contains("<shiki-code"), 
+            "Should wrap all code blocks when exclusion list is null");
+    }
+
+    @Test
+    void shouldExcludeOnlySpecifiedLanguage() {
+        basicConfig.setExcludedLanguages(java.util.List.of("mermaid"));
+        
+        String input = """
+            <div>
+                <pre><code class="language-javascript">const x = 1;</code></pre>
+                <pre><code class="language-mermaid">graph TD; A-->B;</code></pre>
+            </div>
+            """;
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        // JavaScript should be wrapped, mermaid should not
+        int shikiCodeCount = countOccurrences(result, "<shiki-code");
+        assertEquals(1, shikiCodeCount, "Should only wrap JavaScript, not mermaid");
+        
+        assertTrue(result.contains("const x = 1;"));
+        assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
+    }
+
+    @Test
+    void excludedLanguagesShouldNotBeAffectedByBlurStyle() {
+        // This test verifies that excluded languages maintain their structure
+        // so they won't be affected by the shiki-code-specific blur filter
+        basicConfig.setExcludedLanguages(java.util.List.of("mermaid"));
+        
+        String input = """
+            <div>
+                <pre><code class="language-java">System.out.println("test");</code></pre>
+                <pre><code class="language-mermaid">graph TD; A-->B;</code></pre>
+            </div>
+            """;
+        
+        String result = ShikiPreTagProcessor.process(input, basicConfig);
+        
+        // Java code should be wrapped in shiki-code (will be affected by blur style)
+        assertTrue(result.contains("<shiki-code"));
+        assertTrue(result.contains("System.out.println"));
+        
+        // Mermaid code should NOT be wrapped in shiki-code (won't be affected by blur style)
+        // The blur style uses selector "shiki-code pre:has(code)", so bare pre>code won't match
+        assertTrue(result.contains("<pre><code class=\"language-mermaid\">"));
+        
+        // Verify that mermaid content appears outside of any shiki-code element
+        // JSoup escapes > to &gt; in HTML output
+        int mermaidIndex = result.indexOf("graph TD; A--&gt;B;");
+        int lastShikiCodeClose = result.lastIndexOf("</shiki-code>");
+        assertTrue(mermaidIndex > lastShikiCodeClose,
+            "Mermaid code should appear after all shiki-code elements (not wrapped)");
+        
+        // Verify the structure difference:
+        // Wrapped: <shiki-code><pre><code>...</code></pre></shiki-code>
+        // Not wrapped: <pre><code>...</code></pre>
+        int preTags = countOccurrences(result, "<pre>");
+        int shikiCodeTags = countOccurrences(result, "<shiki-code");
+        assertEquals(2, preTags, "Should have 2 pre tags total");
+        assertEquals(1, shikiCodeTags, "Should have only 1 shiki-code tag (for Java, not mermaid)");
+    }
+
     private int countOccurrences(String str, String substring) {
         int count = 0;
         int index = 0;
