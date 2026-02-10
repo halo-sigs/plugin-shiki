@@ -92,6 +92,17 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
         properties.setProperty("fontSize", basicConfig.getFontSize());
         properties.setProperty("version", pluginContext.getVersion());
         properties.setProperty("style", Constants.generatePreStyle(basicConfig.getExcludedLanguages()));
+        
+        // Convert excludedLanguages list to JSON array string
+        String excludedLanguagesJson = "[]";
+        if (basicConfig.getExcludedLanguages() != null && !basicConfig.getExcludedLanguages().isEmpty()) {
+            excludedLanguagesJson = "[" + String.join(",", 
+                basicConfig.getExcludedLanguages().stream()
+                    .map(lang -> "'" + lang + "'")
+                    .toList()
+            ) + "]";
+        }
+        properties.setProperty("excludedLanguages", excludedLanguagesJson);
 
         return PROPERTY_PLACEHOLDER_HELPER.replacePlaceholders("""
             ${style}
@@ -102,7 +113,8 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
                     lightTheme: '${lightTheme}',
                     darkTheme: '${darkTheme}',
                     variant: '${variant}',
-                    fontSize: '${fontSize}'
+                    fontSize: '${fontSize}',
+                    excludedLanguages: ${excludedLanguages}
                 });
             })
             window.addEventListener('pjax:complete', () => {
@@ -110,7 +122,8 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
                     lightTheme: '${lightTheme}',
                     darkTheme: '${darkTheme}',
                     variant: '${variant}',
-                    fontSize: '${fontSize}'
+                    fontSize: '${fontSize}',
+                    excludedLanguages: ${excludedLanguages}
                 });
             });
             </script>
