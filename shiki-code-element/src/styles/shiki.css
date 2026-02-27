@@ -99,10 +99,17 @@ code .line:last-child:empty::before {
 
 .has-highlighted .highlighted.error::after {
   background: rgba(244, 63, 94, 0.16) !important;
+  border-left: 1px solid rgba(244, 63, 94, 0.8) !important;
 }
 
 .has-highlighted .highlighted.warning::after {
   background: rgba(234, 179, 8, 0.16) !important;
+  border-left: 1px solid rgba(234, 179, 8, 0.8) !important;
+}
+
+.has-highlighted .highlighted.info::after {
+  background: rgba(101, 117, 133, 0.16) !important;
+  border-left: 1px solid rgba(101, 117, 133, 0.8) !important;
 }
 
 :host([color-scheme="dark"]) .shiki,

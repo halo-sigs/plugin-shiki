@@ -135,6 +135,8 @@ spec:
               value: gruvbox-light-soft
             - label: Horizon（dark）
               value: horizon
+            - label: Horizon Bright（dark）
+              value: horizon-bright
             - label: Houston（dark）
               value: houston
             - label: Kanagawa Dragon（dark）
@@ -274,6 +276,8 @@ spec:
               value: gruvbox-light-soft
             - label: Horizon（dark）
               value: horizon
+            - label: Horizon Bright（dark）
+              value: horizon-bright
             - label: Houston（dark）
               value: houston
             - label: Kanagawa Dragon（dark）
@@ -430,6 +434,8 @@ spec:
               value: gruvbox-light-soft
             - label: Horizon（dark）
               value: horizon
+            - label: Horizon Bright（dark）
+              value: horizon-bright
             - label: Houston（dark）
               value: houston
             - label: Kanagawa Dragon（dark）

@@ -20,14 +20,13 @@
   image: getmeili/meilisearch:v1.15
   // [!code ++]
   restart: on-failure:3
-  // [!code error]
+  // [!code warning]
   networks:
     - halo_network
   volumes:
   // [!code highlight]
     - ./meilisearch-data:/meili_data
   environment:
-   // [!code focus]
     - MEILI_ENV=production
     - MEILI_MASTER_KEY=&lt;your-super-secret-master-key-here&gt;</code></pre>
         </shiki-code>
