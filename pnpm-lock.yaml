@@ -52,9 +52,12 @@ importers:
         specifier: ^3 || ^4
         version: 4.0.0
     devDependencies:
-      '@iconify/json':
-        specifier: ^2.2.443
-        version: 2.2.443
+      '@iconify-json/mingcute':
+        specifier: ^1.2.7
+        version: 1.2.7
+      '@iconify-json/tabler':
+        specifier: ^1.2.33
+        version: 1.2.33
       '@unocss/reset':
         specifier: ^66.6.2
         version: 66.6.2
@@ -270,8 +273,11 @@ packages:
       vue: ^3.5.x
       vue-router: ^4.6.x
 
-  '@iconify/json@2.2.443':
-    resolution: {integrity: sha512-xyDqw1FeuNWPhYj+Sp2I1kyD6J5U5s8GxEW+dgIY1/Vl0b65t+PlRVCxEBtx73CanfDUPrSEHbxKQJwzXrcV/w==}
+  '@iconify-json/mingcute@1.2.7':
+    resolution: {integrity: sha512-bp4z6F53KAQp99aSL7qPCHL7HWUNGMNKIhfo/dx9pwVHiad/WusUbTOFXEZfpA44syJPzSOxa3O6Pwiq7qZz1g==}
+
+  '@iconify-json/tabler@1.2.33':
+    resolution: {integrity: sha512-q9nUQfE/cjIrGh5bAKHTphitAZpT0kX9SxDgZo3Sx8ofeDTsaHVdRwrn+CfKiJ5vQ1b1btqVwizXzIgz9KEPjA==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -2488,10 +2494,13 @@ snapshots:
     transitivePeerDependencies:
       - axios
 
-  '@iconify/json@2.2.443':
+  '@iconify-json/mingcute@1.2.7':
     dependencies:
       '@iconify/types': 2.0.0
-      pathe: 2.0.3
+
+  '@iconify-json/tabler@1.2.33':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/types@2.0.0': {}
 

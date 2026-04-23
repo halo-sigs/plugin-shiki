@@ -5,7 +5,7 @@ import "@halo-dev/shiki-code-element";
  */
 function extractLanguageCode(codeElement: Element): string | null {
   const supportedPrefixes = ["language-", "lang-"];
-  
+
   for (const className of codeElement.classList) {
     for (const prefix of supportedPrefixes) {
       if (className.startsWith(prefix)) {
@@ -13,26 +13,29 @@ function extractLanguageCode(codeElement: Element): string | null {
       }
     }
   }
-  
+
   return null;
 }
 
 /**
  * Check if the code element's language should be excluded from processing
  */
-function shouldExclude(codeElement: Element, excludedLanguages?: string[]): boolean {
+function shouldExclude(
+  codeElement: Element,
+  excludedLanguages?: string[],
+): boolean {
   if (!excludedLanguages || excludedLanguages.length === 0) {
     return false;
   }
-  
+
   const languageCode = extractLanguageCode(codeElement);
   if (!languageCode) {
     return false;
   }
-  
+
   // Check if the language is in the exclusion list (case-insensitive)
   return excludedLanguages.some(
-    (excluded) => excluded.toLowerCase() === languageCode
+    (excluded) => excluded.toLowerCase() === languageCode,
   );
 }
 
@@ -48,7 +51,7 @@ export function renderCodeBlock(options: {
     if (shouldExclude(codeElement, options.excludedLanguages)) {
       return;
     }
-    
+
     const preElement = codeElement.parentElement;
     const shikiElement = document.createElement("shiki-code");
     shikiElement.setAttribute("light-theme", options.lightTheme);
