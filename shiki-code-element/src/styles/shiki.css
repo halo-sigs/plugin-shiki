@@ -28,9 +28,12 @@ code .line::before {
   color: rgba(115, 138, 148, 0.5);
 }
 
-code .line:last-child:empty::before {
-  content: none;
-  counter-increment: none;
+code .line:last-child:empty {
+  display: none;
+}
+
+code .line:last-child:has(> span:empty:only-child) {
+  display: none;
 }
 
 .has-diff .diff,
