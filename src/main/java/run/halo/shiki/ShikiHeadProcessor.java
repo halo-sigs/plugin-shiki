@@ -1,6 +1,5 @@
 package run.halo.shiki;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import lombok.RequiredArgsConstructor;
@@ -91,13 +90,14 @@ public class ShikiHeadProcessor implements TemplateHeadProcessor {
         properties.setProperty("variant", basicConfig.getVariant());
         properties.setProperty("fontSize", basicConfig.getFontSize());
         properties.setProperty("version", pluginContext.getVersion());
-        properties.setProperty("style", Constants.generatePreStyle(basicConfig.getExcludedLanguages()));
+        properties.setProperty("style", Constants.generatePreStyle(basicConfig.getEffectiveExcludedLanguages()));
         
         // Convert excludedLanguages list to JSON array string
         String excludedLanguagesJson = "[]";
-        if (basicConfig.getExcludedLanguages() != null && !basicConfig.getExcludedLanguages().isEmpty()) {
+        var effectiveExcludedLanguages = basicConfig.getEffectiveExcludedLanguages();
+        if (effectiveExcludedLanguages != null && !effectiveExcludedLanguages.isEmpty()) {
             excludedLanguagesJson = "[" + String.join(",", 
-                basicConfig.getExcludedLanguages().stream()
+                effectiveExcludedLanguages.stream()
                     .map(lang -> "'" + lang + "'")
                     .toList()
             ) + "]";

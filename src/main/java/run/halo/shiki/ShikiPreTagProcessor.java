@@ -1,10 +1,10 @@
 package run.halo.shiki;
 
+import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import java.util.List;
 
 public class ShikiPreTagProcessor {
     static String process(String content, ShikiBasicConfig basicConfig) {
@@ -16,7 +16,7 @@ public class ShikiPreTagProcessor {
         // Process each pre element
         for (Element preElement : preElements) {
             Element codeElement = preElement.selectFirst("code");
-            if (codeElement != null && shouldExclude(codeElement, basicConfig.getExcludedLanguages())) {
+            if (codeElement != null && shouldExclude(codeElement, basicConfig.getEffectiveExcludedLanguages())) {
                 // Skip processing for excluded languages
                 continue;
             }

@@ -45,6 +45,8 @@ spec:
           autoSelect: false
           multiple: true
           help: 排除指定语言的代码块不进行 Shiki 高亮渲染，适用于需要其他插件处理的特定语言（如 mermaid、plantuml 等）。排除的代码块将保留原始的 pre>code 结构，不被 shiki-code 元素包裹。
+          value:
+            - mermaid
           options:
             - label: Mermaid
               value: mermaid
@@ -366,6 +368,91 @@ spec:
             lightTheme: $get(lightTheme).value
             darkTheme: $get(darkTheme).value
             fontSize: $get(fontSize).value
+        - $formkit: checkbox
+          name: mermaidEnabled
+          id: mermaidEnabled
+          key: mermaidEnabled
+          label: 启用 Mermaid 图表渲染
+          help: 启用后会自动渲染文章和页面中的 Mermaid 代码块，并支持主题切换与缩放操作。
+          value: true
+        - $formkit: select
+          if: $get(mermaidEnabled).value
+          name: mermaidLightTheme
+          id: mermaidLightTheme
+          key: mermaidLightTheme
+          label: Mermaid 亮色主题
+          value: default
+          options:
+            - label: Default
+              value: default
+            - label: Neutral
+              value: neutral
+            - label: Forest
+              value: forest
+            - label: Base
+              value: base
+        - $formkit: select
+          if: $get(mermaidEnabled).value
+          name: mermaidDarkTheme
+          id: mermaidDarkTheme
+          key: mermaidDarkTheme
+          label: Mermaid 暗色主题
+          value: dark
+          options:
+            - label: Dark
+              value: dark
+            - label: Default
+              value: default
+            - label: Neutral
+              value: neutral
+            - label: Forest
+              value: forest
+            - label: Base
+              value: base
+        - $formkit: checkbox
+          if: $get(mermaidEnabled).value
+          name: mermaidZoomEnabled
+          id: mermaidZoomEnabled
+          key: mermaidZoomEnabled
+          label: 启用 Mermaid 缩放
+          value: true
+        - $formkit: checkbox
+          if: $get(mermaidEnabled).value && $get(mermaidZoomEnabled).value
+          name: mermaidFullscreenEnabled
+          id: mermaidFullscreenEnabled
+          key: mermaidFullscreenEnabled
+          label: 启用 Mermaid 全屏查看
+          value: true
+        - $formkit: select
+          if: $get(mermaidEnabled).value
+          name: mermaidDefaultViewMode
+          id: mermaidDefaultViewMode
+          key: mermaidDefaultViewMode
+          label: Mermaid 默认预览模式
+          value: preview
+          help: 选择 Mermaid 代码块首次展示为渲染图表还是源码文本，前台仍可手动切换。
+          options:
+            - label: 渲染预览
+              value: preview
+            - label: 文本预览
+              value: text
+        - $formkit: select
+          if: $get(mermaidEnabled).value
+          name: mermaidSecurityLevel
+          id: mermaidSecurityLevel
+          key: mermaidSecurityLevel
+          label: Mermaid 安全级别
+          value: strict
+          help: strict 安全性最高；如图表需要可点击链接，可选择 loose。
+          options:
+            - label: Strict
+              value: strict
+            - label: Loose
+              value: loose
+            - label: Antiscript
+              value: antiscript
+            - label: Sandbox
+              value: sandbox
     - group: editor
       label: 编辑器设置
       formSchema:

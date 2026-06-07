@@ -1,7 +1,6 @@
 import reset from "@unocss/reset/tailwind.css?inline";
 import { css, html, unsafeCSS } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { when } from "lit/directives/when.js";
 import shikiStyle from "../styles/shiki.css?inline";
 import { ShikiCodeBaseVariant } from "./base";
 
@@ -11,24 +10,20 @@ export class ShikiCodeSimpleVariant extends ShikiCodeBaseVariant {
       <div class="shadow rounded-lg relative group">
         ${unsafeHTML(this.options.html)}
         <div
-          class="absolute select-none top-1 text-xs right-2 group-hover:opacity-0 transition-opacity"
+          class="absolute select-none top-1 text-xs right-14 transition-opacity"
           style="color: ${this.options.theme?.fg}"
         >
           ${this.options.languageName}
         </div>
         <button
-          class="opacity-0 z-2 select-none group-hover:opacity-100 transition-opacity absolute top-2 rounded right-2 size-8 inline-flex items-center justify-center"
-          style="background-color: ${this.options.theme?.bg};"
+          class="copy-button"
+          style="background-color: ${this.options.theme?.bg}; color: ${this.options.theme?.fg}; border-color: ${this.options.theme?.fg};"
           @click=${this.handleCopyCode}
-          tabindex="-1"
+          title="复制代码"
+          aria-label="复制代码"
+          tabindex="0"
         >
-          ${when(
-            this.copied,
-            () =>
-              html`<i class="i-tabler-check block" style="color: ${this.options.theme?.fg}"></i>`,
-            () =>
-              html`<i class="i-tabler-copy block" style="color: ${this.options.theme?.fg}"></i>`,
-          )}
+          ${this.copied ? "已复制" : "复制"}
         </button>
       </div>
     `;
@@ -40,6 +35,32 @@ export class ShikiCodeSimpleVariant extends ShikiCodeBaseVariant {
     css`
       .shiki {
         border-radius: inherit;
+      }
+      .copy-button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.5rem;
+        height: 1.75rem;
+        padding: 0 0.625rem;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        line-height: 1;
+        opacity: 0.88;
+        cursor: pointer;
+        user-select: none;
+      }
+      .copy-button:hover,
+      .copy-button:focus-visible {
+        opacity: 1;
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
       }
       @unocss-placeholder;
     `,

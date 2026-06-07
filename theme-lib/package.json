@@ -5,7 +5,8 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "@halo-dev/shiki-code-element": "workspace:*"
+    "@halo-dev/shiki-code-element": "workspace:*",
+    "mermaid": "^11.15.0"
   },
   "devDependencies": {
     "terser": "^5.46.0"

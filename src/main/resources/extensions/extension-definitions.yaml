@@ -17,3 +17,23 @@ spec:
   extensionPointName: reactive-singlepage-content-handler
   displayName: "Shiki 代码高亮处理器"
   description: "使用 Shiki 进行代码高亮的页面内容处理器"
+---
+apiVersion: plugin.halo.run/v1alpha1
+kind: ExtensionDefinition
+metadata:
+  name: post-content-mermaid-handler
+spec:
+  className: run.halo.shiki.MermaidPostContentHandler
+  extensionPointName: reactive-post-content-handler
+  displayName: "Mermaid 图表处理器"
+  description: "将文章内容中的 Mermaid 代码块转换为可渲染图表容器"
+---
+apiVersion: plugin.halo.run/v1alpha1
+kind: ExtensionDefinition
+metadata:
+  name: singlepage-content-mermaid-handler
+spec:
+  className: run.halo.shiki.MermaidSinglePageContentHandler
+  extensionPointName: reactive-singlepage-content-handler
+  displayName: "Mermaid 图表处理器"
+  description: "将页面内容中的 Mermaid 代码块转换为可渲染图表容器"

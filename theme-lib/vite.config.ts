@@ -26,9 +26,10 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: "./src/index.ts",
-      name: "shiki-code",
-      fileName: `shiki-code`,
+      entry: {
+        "shiki-code": "./src/index.ts",
+        "mermaid-renderer": "./src/mermaid-renderer.ts",
+      },
       formats: ["es"],
     },
     emptyOutDir: true,
