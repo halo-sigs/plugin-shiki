@@ -12,7 +12,11 @@ export class ShikiCodeMacVariant extends ShikiCodeBaseVariant {
 
   override render() {
     return html`
-      <div class="shadow rounded-lg overflow-hidden relative group">
+      <div
+        class="shadow rounded-lg overflow-hidden relative group"
+        @click=${this.handleCodeBlockClick}
+        @keydown=${this.handleCodeBlockKeydown}
+      >
         <header
           class="flex items-center h-10 justify-between px-4.5 opacity-95"
           style="background-color: ${this.options.theme?.bg};"

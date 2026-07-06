@@ -8,7 +8,11 @@ import { ShikiCodeBaseVariant } from "./base";
 export class ShikiCodeSimpleVariant extends ShikiCodeBaseVariant {
   override render() {
     return html`
-      <div class="shadow rounded-lg relative group">
+      <div
+        class="shadow rounded-lg relative group"
+        @click=${this.handleCodeBlockClick}
+        @keydown=${this.handleCodeBlockKeydown}
+      >
         ${unsafeHTML(this.options.html)}
         <div
           class="absolute select-none top-1 text-xs right-2 group-hover:opacity-0 transition-opacity"

@@ -14,7 +14,7 @@
 - 支持为非文章页面启用代码高亮渲染，如瞬间、Docsme 文档页面等
 - 体积轻量，支持异步加载语言和高亮风格依赖
 - 支持分别为暗色和亮色模式设置代码高亮风格
-- 支持代码行高亮、行聚焦、代码对比
+- 支持代码行高亮、行聚焦、代码对比、代码折叠
 
 ## 安装
 
@@ -43,7 +43,7 @@
 
 ### 代码行功能
 
-插件内建了 Shiki 的一些[代码转换器](https://shiki.style/packages/transformers)，包括行高亮、行聚焦、代码对比，以下是具体书写方式：
+插件内建了 Shiki 的一些[代码转换器](https://shiki.style/packages/transformers)，包括行高亮、行聚焦、代码对比、代码折叠，以下是具体书写方式：
 
 #### 行高亮
 
@@ -96,6 +96,31 @@ console.log('hewwo')
 // [!code ++:2]
 console.log('hello')
 console.log('goodbye')
+```
+
+#### 代码折叠
+
+使用 `// [!code fold:start]` 和 `// [!code fold:end]` 标记需要折叠的代码范围。标记需要写在对应语言的注释中，例如 JS/TS 使用 `//`，YAML、Shell 等可以使用 `#`。
+
+成对标记会折叠中间的代码，点击起始行上的折叠提示可以展开或收起，示例：
+
+```ts
+console.log('Visible');
+// [!code fold:start]
+function hidden() {
+  return 'Folded';
+}
+// [!code fold:end]
+console.log(hidden());
+```
+
+如果只写 `// [!code fold:start]`，则会从标记处折叠到代码块末尾，并在代码块底部显示展开按钮：
+
+```ts
+console.log('Visible');
+// [!code fold:start]
+console.log('Folded to the end');
+console.log('Folded to the end');
 ```
 
 ## 注意事项
