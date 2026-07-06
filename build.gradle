@@ -1,8 +1,8 @@
 plugins {
     id 'java'
-    id "com.github.node-gradle.node" version "7.0.2"
-    id "io.freefair.lombok" version "8.13"
-    id "run.halo.plugin.devtools" version "0.6.1"
+    id "com.github.node-gradle.node" version "7.1.0"
+    id "io.freefair.lombok" version "9.2.0"
+    id "run.halo.plugin.devtools" version "0.8.0"
 }
 
 group 'run.halo.shiki'
@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform('run.halo.tools.platform:plugin:2.22.0')
+    implementation platform('run.halo.tools.platform:plugin:2.25.0')
     compileOnly 'run.halo.app:api'
 
     testImplementation 'run.halo.app:api'
@@ -37,6 +37,7 @@ tasks.withType(JavaCompile).configureEach {
 
 node {
     nodeProjectDir = file("${project.projectDir}")
+    pnpmVersion = '10'
 }
 
 tasks.register('buildFrontend', PnpmTask) {
@@ -55,6 +56,10 @@ build {
     }
 }
 
+tasks.named('generatePluginComponentsIdx') {
+    notCompatibleWithConfigurationCache('This task invokes "Task.project" at execution time, which is not supported with configuration cache.')
+}
+
 halo {
-    version = '2.22'
+    version = '2.25'
 }
