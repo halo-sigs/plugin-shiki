@@ -1,122 +1,627 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Vite + Lit + TS</title>
-        <script type="module" src="/src/index.ts"></script>
-        <style>
-            body {
-                max-width: 960px;
-                margin: 0 auto;
-                padding: 2rem;
-                background: #f6f8fa;
-                font-family:
-                    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-                    "Segoe UI", sans-serif;
-            }
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shiki Code Playground</title>
+    <script type="module" src="/src/index.ts"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-            main {
-                display: grid;
-                gap: 1.5rem;
-            }
+      :root {
+        color-scheme: light;
+        --page-bg: #f4f6f8;
+        --panel-bg: #ffffff;
+        --panel-muted: #f7f9fb;
+        --text: #17202a;
+        --muted: #637083;
+        --border: #d7dee8;
+        --border-strong: #bac6d4;
+        --accent: #0f766e;
+        --accent-strong: #0b5f59;
+        --shadow: 0 12px 34px rgba(22, 32, 42, 0.08);
+      }
 
-            section {
-                display: grid;
-                gap: 0.75rem;
-            }
+      body[data-color-scheme="dark"] {
+        color-scheme: dark;
+        --page-bg: #111827;
+        --panel-bg: #182231;
+        --panel-muted: #111b29;
+        --text: #edf2f7;
+        --muted: #9aa8ba;
+        --border: #2d3a4b;
+        --border-strong: #435166;
+        --accent: #22c7b8;
+        --accent-strong: #7ddbd1;
+        --shadow: 0 18px 42px rgba(0, 0, 0, 0.26);
+      }
 
-            h2 {
-                margin: 0;
-                color: #24292f;
-                font-size: 1rem;
-            }
+      @media (prefers-color-scheme: dark) {
+        body[data-color-scheme="auto"] {
+          color-scheme: dark;
+          --page-bg: #111827;
+          --panel-bg: #182231;
+          --panel-muted: #111b29;
+          --text: #edf2f7;
+          --muted: #9aa8ba;
+          --border: #2d3a4b;
+          --border-strong: #435166;
+          --accent: #22c7b8;
+          --accent-strong: #7ddbd1;
+          --shadow: 0 18px 42px rgba(0, 0, 0, 0.26);
+        }
+      }
 
-            shiki-code > pre {
-                filter: blur(10px) !important;
-                padding: 1rem !important;
-            }
-        </style>
-    </head>
-    <body data-color-scheme="auto">
-        <main>
-            <section>
-                <h2>Mac variant with notation highlights</h2>
-                <shiki-code variant="mac">
-                    <pre><code class="language-YAML">meilisearch:
-  # [!code --]
-  image: getmeili/meilisearch:v1.15
-  # [!code ++]
-  restart: on-failure:3
-  # [!code warning]
-  networks:
-    - halo_network
-  volumes:
-  # [!code highlight]
-    - ./meilisearch-data:/meili_data
-  environment:
-    - MEILI_ENV=production
-    - MEILI_MASTER_KEY=&lt;your-super-secret-master-key-here&gt;</code></pre>
-                </shiki-code>
-            </section>
+      body {
+        min-width: 320px;
+        margin: 0;
+        color: var(--text);
+        background: var(--page-bg);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
 
-            <section>
-                <h2>Simple variant with folded code</h2>
-                <shiki-code>
-                    <pre><code class="language-ts">import { ref } from "vue";
-import { useState } from "react"
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
 
-console.log("Visible before folded lines");
+      button,
+      select,
+      input[type="text"],
+      textarea {
+        color: var(--text);
+        background: var(--panel-bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+      }
 
-// [!code fold:start]
-function createCounterStore() {
-  const count = ref(0);
-  const [enabled, setEnabled] = useState(true);
+      button {
+        min-height: 2.25rem;
+        padding: 0 0.75rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
 
+      button:hover {
+        border-color: var(--border-strong);
+      }
+
+      button.primary {
+        color: #ffffff;
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      button.primary:hover {
+        background: var(--accent-strong);
+      }
+
+      select,
+      input[type="text"] {
+        width: 100%;
+        min-height: 2.25rem;
+        padding: 0 0.625rem;
+        font-size: 0.875rem;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 23rem;
+        resize: vertical;
+        padding: 0.875rem;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: 0.875rem;
+        line-height: 1.55;
+        tab-size: 2;
+      }
+
+      .app-shell {
+        width: min(1440px, 100%);
+        margin: 0 auto;
+        padding: 1.25rem;
+      }
+
+      .app-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .app-title {
+        margin: 0;
+        font-size: 1.5rem;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .app-meta {
+        margin: 0.35rem 0 0;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      .status {
+        min-height: 2rem;
+        padding: 0.375rem 0.625rem;
+        color: var(--muted);
+        background: var(--panel-bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.8125rem;
+        white-space: nowrap;
+      }
+
+      .playground {
+        display: grid;
+        grid-template-columns: minmax(18rem, 24rem) minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .panel {
+        min-width: 0;
+        background: var(--panel-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .controls {
+        position: sticky;
+        top: 1rem;
+        overflow: hidden;
+      }
+
+      .panel-header,
+      .panel-body,
+      .panel-footer {
+        padding: 1rem;
+      }
+
+      .panel-header {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .panel-title {
+        margin: 0;
+        font-size: 0.9375rem;
+        line-height: 1.3;
+      }
+
+      .control-grid {
+        display: grid;
+        gap: 0.875rem;
+      }
+
+      .field {
+        display: grid;
+        gap: 0.375rem;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.625rem;
+      }
+
+      .label-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      label,
+      .label {
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .value {
+        color: var(--text);
+        font-size: 0.75rem;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      }
+
+      .segmented {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+      }
+
+      .segmented label {
+        min-height: 2.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        background: var(--panel-bg);
+        cursor: pointer;
+        text-transform: none;
+        letter-spacing: 0;
+        border-right: 1px solid var(--border);
+      }
+
+      .segmented label:last-child {
+        border-right: 0;
+      }
+
+      .segmented input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .segmented label:has(input:checked) {
+        color: #ffffff;
+        background: var(--accent);
+      }
+
+      .preview-panel {
+        min-width: 0;
+      }
+
+      .preview-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .preview-stats {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--muted);
+        font-size: 0.8125rem;
+      }
+
+      .preview-surface {
+        width: 100%;
+        min-height: 18rem;
+        padding: 1rem;
+        overflow-x: auto;
+        background: var(--panel-muted);
+      }
+
+      .preview-width {
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .preview-width shiki-code {
+        width: 100%;
+      }
+
+      .editor-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .snippet {
+        min-height: 23rem;
+        margin: 0;
+        overflow: auto;
+        padding: 0.875rem;
+        color: var(--text);
+        background: var(--panel-muted);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: 0.8125rem;
+        line-height: 1.5;
+        white-space: pre;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      @media (max-width: 980px) {
+        .playground,
+        .editor-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .controls {
+          position: static;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .app-shell {
+          padding: 0.75rem;
+        }
+
+        .app-header,
+        .preview-toolbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+
+        .status {
+          white-space: normal;
+        }
+      }
+    </style>
+  </head>
+  <body data-color-scheme="auto">
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <h1 class="app-title">Shiki Code Playground</h1>
+          <p class="app-meta">@halo-dev/shiki-code-element local demo</p>
+        </div>
+        <div id="renderStatus" class="status" aria-live="polite">Booting</div>
+      </header>
+
+      <div class="playground">
+        <aside class="panel controls">
+          <div class="panel-header">
+            <h2 class="panel-title">Controls</h2>
+          </div>
+          <div class="panel-body control-grid">
+            <div class="field">
+              <label for="sampleSelect">Preset</label>
+              <select id="sampleSelect">
+                <option value="all-notations">All notations</option>
+                <option value="tail-fold">Tail fold with long line</option>
+                <option value="yaml-fold">YAML paired fold</option>
+                <option value="plaintext">Plain text</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="variantSelect">Variant</label>
+                <select id="variantSelect">
+                  <option value="simple">simple</option>
+                  <option value="mac">mac</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="languageInput">Language</label>
+                <input id="languageInput" type="text" list="languageOptions" value="ts" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="lightThemeInput">Light theme</label>
+                <input
+                  id="lightThemeInput"
+                  type="text"
+                  list="themeOptions"
+                  value="github-light"
+                />
+              </div>
+              <div class="field">
+                <label for="darkThemeInput">Dark theme</label>
+                <input
+                  id="darkThemeInput"
+                  type="text"
+                  list="themeOptions"
+                  value="github-dark"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="label-line">
+                <span class="label">Color scheme</span>
+                <span id="schemeValue" class="value">auto</span>
+              </div>
+              <div class="segmented" role="radiogroup" aria-label="Color scheme">
+                <label><input type="radio" name="scheme" value="auto" checked />Auto</label>
+                <label><input type="radio" name="scheme" value="light" />Light</label>
+                <label><input type="radio" name="scheme" value="dark" />Dark</label>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="classPrefixSelect">Class prefix</label>
+                <select id="classPrefixSelect">
+                  <option value="language-">language-</option>
+                  <option value="lang-">lang-</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="fontSizeSelect">Font size</label>
+                <select id="fontSizeSelect">
+                  <option value="0.75em">0.75em</option>
+                  <option value="0.875em" selected>0.875em</option>
+                  <option value="1em">1em</option>
+                  <option value="1.125em">1.125em</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="label-line">
+                <label for="previewWidthRange">Preview width</label>
+                <span id="previewWidthValue" class="value">960px</span>
+              </div>
+              <input id="previewWidthRange" type="range" min="320" max="1200" step="20" value="960" />
+            </div>
+          </div>
+          <div class="panel-footer actions">
+            <button id="renderButton" class="primary" type="button">Render</button>
+            <button id="resetButton" type="button">Reset preset</button>
+          </div>
+        </aside>
+
+        <section class="panel preview-panel">
+          <div class="panel-header preview-toolbar">
+            <h2 class="panel-title">Preview</h2>
+            <div class="preview-stats">
+              <span id="lineCount">0 lines</span>
+              <span id="charCount">0 chars</span>
+            </div>
+          </div>
+          <div class="preview-surface">
+            <div id="previewWidth" class="preview-width">
+              <div id="previewHost"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="editor-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Source</h2>
+          </div>
+          <div class="panel-body">
+            <textarea id="codeInput" spellcheck="false"></textarea>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Rendered element</h2>
+          </div>
+          <div class="panel-body">
+            <pre id="attributePreview" class="snippet"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <datalist id="themeOptions">
+      <option value="github-light"></option>
+      <option value="github-dark"></option>
+      <option value="vitesse-light"></option>
+      <option value="vitesse-dark"></option>
+      <option value="catppuccin-latte"></option>
+      <option value="catppuccin-mocha"></option>
+      <option value="dracula"></option>
+      <option value="one-dark-pro"></option>
+      <option value="nord"></option>
+      <option value="slack-dark"></option>
+    </datalist>
+
+    <datalist id="languageOptions">
+      <option value="ts"></option>
+      <option value="tsx"></option>
+      <option value="js"></option>
+      <option value="vue"></option>
+      <option value="yaml"></option>
+      <option value="html"></option>
+      <option value="css"></option>
+      <option value="bash"></option>
+      <option value="json"></option>
+      <option value="plaintext"></option>
+      <option value="auto"></option>
+      <option value="text"></option>
+    </datalist>
+
+    <script type="module">
+      const samples = {
+        "all-notations": {
+          language: "ts",
+          variant: "mac",
+          code: `import { ref } from "vue";
+
+const count = ref(0);
+// [!code --]
+const theme = "github-dark";
+// [!code ++]
+const theme = "github-light";
+// [!code warning]
+const persistedMode = window.localStorage.getItem("mode");
+// [!code error]
+JSON.parse("{broken");
+// [!code highlight]
+export function createCounter() {
+  // [!code focus]
   return {
     count,
+    increment: () => count.value++,
+  };
+}
+
+// [!code fold:start]
+function internalFactory() {
+  const enabled = ref(true);
+  const retries = ref(3);
+
+  return {
     enabled,
-    setEnabled,
+    retries,
+    reset: () => {
+      enabled.value = true;
+      retries.value = 3;
+    },
   };
 }
 // [!code fold:end]
 
-console.log("Visible after folded lines");</code></pre>
-                </shiki-code>
-            </section>
-
-            <section>
-                <h2>Simple variant with folded tail</h2>
-                <shiki-code light-theme="github-light" dark-theme="github-light">
-                    <pre><code class="language-tsx">import { useState } from "react";
+console.log(createCounter());`,
+        },
+        "tail-fold": {
+          language: "tsx",
+          variant: "simple",
+          code: `import { useState } from "react";
 
 export default () => {
   const [count, setCount] = useState(0);
   return (
-    &lt;div&gt;
-      &lt;button onClick={() => setCount(count + 1)}&gt;
+    <div>
+      <button onClick={() => setCount(count + 1)}>
         Count: {count}
-      &lt;/button&gt;
+      </button>
       {/* [!code fold:start] */}
-      &lt;div&gt;Line 1&lt;/div&gt;
-      &lt;div&gt;Line 2&lt;/div&gt;
-      &lt;div&gt;Line 3&lt;/div&gt;
-      &lt;div&gt;Line 4&lt;/div&gt;
-      &lt;div&gt;Line 5&lt;/div&gt;
-      &lt;div&gt;Line 6&lt;/div&gt;
-      &lt;div&gt;Line 7&lt;/div&gt;
-      &lt;div&gt;Line 8&lt;/div&gt;
-    &lt;/div&gt;
+      <div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div><div>Line 1</div>
+      <div>Line 2</div>
+      <div>Line 3</div>
+      <div>Line 4</div>
+      <div>Line 5</div>
+      <div>Line 6</div>
+      <div>Line 7</div>
+      <div>Line 8</div>
+    </div>
   );
-};</code></pre>
-                </shiki-code>
-            </section>
-
-            <section>
-                <h2>Mac variant with paired folded YAML block</h2>
-                <shiki-code variant="mac">
-                    <pre><code class="language-yaml">services:
+};`,
+        },
+        "yaml-fold": {
+          language: "yaml",
+          variant: "mac",
+          code: `services:
   halo:
     image: halohub/halo:2
     restart: unless-stopped
@@ -136,9 +641,180 @@ export default () => {
 
   postgres:
     image: postgres:17
-    restart: unless-stopped</code></pre>
-                </shiki-code>
-            </section>
-        </main>
-    </body>
+    restart: unless-stopped`,
+        },
+        plaintext: {
+          language: "plaintext",
+          variant: "simple",
+          code: `Plain text fallback
+
+No grammar is loaded for this block.
+The copy control, font size, themes, and variants should still render.
+
+Use language "auto" or "text" to verify alias handling.`,
+        },
+      };
+
+      const sampleSelect = document.querySelector("#sampleSelect");
+      const variantSelect = document.querySelector("#variantSelect");
+      const languageInput = document.querySelector("#languageInput");
+      const lightThemeInput = document.querySelector("#lightThemeInput");
+      const darkThemeInput = document.querySelector("#darkThemeInput");
+      const classPrefixSelect = document.querySelector("#classPrefixSelect");
+      const fontSizeSelect = document.querySelector("#fontSizeSelect");
+      const previewWidthRange = document.querySelector("#previewWidthRange");
+      const previewWidthValue = document.querySelector("#previewWidthValue");
+      const schemeValue = document.querySelector("#schemeValue");
+      const renderStatus = document.querySelector("#renderStatus");
+      const lineCount = document.querySelector("#lineCount");
+      const charCount = document.querySelector("#charCount");
+      const codeInput = document.querySelector("#codeInput");
+      const previewWidth = document.querySelector("#previewWidth");
+      const previewHost = document.querySelector("#previewHost");
+      const attributePreview = document.querySelector("#attributePreview");
+      const renderButton = document.querySelector("#renderButton");
+      const resetButton = document.querySelector("#resetButton");
+      const schemeInputs = Array.from(document.querySelectorAll("input[name='scheme']"));
+
+      let renderTimer = 0;
+      let renderToken = 0;
+
+      function escapeHtml(value) {
+        return value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function getScheme() {
+        return schemeInputs.find((input) => input.checked)?.value || "auto";
+      }
+
+      function getLanguageClass() {
+        return `${classPrefixSelect.value}${languageInput.value.trim() || "plaintext"}`;
+      }
+
+      function getAttributeSnippet() {
+        const attrs = [
+          `variant="${variantSelect.value}"`,
+          `light-theme="${lightThemeInput.value.trim()}"`,
+          `dark-theme="${darkThemeInput.value.trim()}"`,
+          `font-size="${fontSizeSelect.value}"`,
+        ].join(" ");
+
+        return `<shiki-code ${attrs}>
+  <pre><code class="${getLanguageClass()}">${escapeHtml(codeInput.value)}</code></pre>
+</shiki-code>`;
+      }
+
+      function syncStats() {
+        const lines = codeInput.value ? codeInput.value.split(/\r\n|\r|\n/).length : 0;
+        lineCount.textContent = `${lines} ${lines === 1 ? "line" : "lines"}`;
+        charCount.textContent = `${codeInput.value.length} chars`;
+        previewWidthValue.textContent = `${previewWidthRange.value}px`;
+        schemeValue.textContent = getScheme();
+      }
+
+      function setSample(name) {
+        const sample = samples[name] || samples["all-notations"];
+        codeInput.value = sample.code;
+        languageInput.value = sample.language;
+        variantSelect.value = sample.variant;
+      }
+
+      function applyDocumentScheme() {
+        const scheme = getScheme();
+        document.documentElement.setAttribute("data-color-scheme", scheme);
+        document.body.setAttribute("data-color-scheme", scheme);
+      }
+
+      function renderPreview() {
+        const token = ++renderToken;
+        const shikiCode = document.createElement("shiki-code");
+        const pre = document.createElement("pre");
+        const code = document.createElement("code");
+
+        applyDocumentScheme();
+        syncStats();
+
+        shikiCode.setAttribute("variant", variantSelect.value);
+        shikiCode.setAttribute("light-theme", lightThemeInput.value.trim() || "github-light");
+        shikiCode.setAttribute("dark-theme", darkThemeInput.value.trim() || lightThemeInput.value.trim());
+        shikiCode.setAttribute("font-size", fontSizeSelect.value);
+        code.className = getLanguageClass();
+        code.textContent = codeInput.value;
+        pre.append(code);
+        shikiCode.append(pre);
+
+        previewWidth.style.maxWidth = `${previewWidthRange.value}px`;
+        previewHost.replaceChildren(shikiCode);
+        attributePreview.textContent = getAttributeSnippet();
+        renderStatus.textContent = "Rendering";
+
+        waitForRender(shikiCode, token);
+      }
+
+      function waitForRender(element, token, attempts = 0) {
+        if (token !== renderToken) {
+          return;
+        }
+
+        if (!element.loading) {
+          renderStatus.textContent = element.error
+            ? `Error: ${element.error}`
+            : `Rendered ${element.languageName || languageInput.value}`;
+          return;
+        }
+
+        if (attempts > 60) {
+          renderStatus.textContent = "Render pending";
+          return;
+        }
+
+        window.setTimeout(() => waitForRender(element, token, attempts + 1), 100);
+      }
+
+      function queueRender() {
+        window.clearTimeout(renderTimer);
+        renderTimer = window.setTimeout(renderPreview, 180);
+      }
+
+      sampleSelect.addEventListener("change", () => {
+        if (sampleSelect.value !== "custom") {
+          setSample(sampleSelect.value);
+        }
+        renderPreview();
+      });
+
+      codeInput.addEventListener("input", () => {
+        sampleSelect.value = "custom";
+        queueRender();
+      });
+
+      [
+        variantSelect,
+        languageInput,
+        lightThemeInput,
+        darkThemeInput,
+        classPrefixSelect,
+        fontSizeSelect,
+        previewWidthRange,
+      ].forEach((control) => control.addEventListener("input", queueRender));
+
+      schemeInputs.forEach((input) => input.addEventListener("change", renderPreview));
+      renderButton.addEventListener("click", renderPreview);
+      resetButton.addEventListener("click", () => {
+        if (sampleSelect.value === "custom") {
+          sampleSelect.value = "all-notations";
+        }
+        setSample(sampleSelect.value);
+        renderPreview();
+      });
+
+      await customElements.whenDefined("shiki-code");
+      setSample("all-notations");
+      renderPreview();
+    </script>
+  </body>
 </html>
