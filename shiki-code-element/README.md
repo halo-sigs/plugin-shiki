@@ -85,6 +85,34 @@ This component integrates with [Shiki Transformers](https://shiki.style/packages
 - Line focus: `// [!code focus]`
 - Error/warning annotations: `// [!code error]`, `// [!code warning]`
 - Code diff (additions/deletions): `// [!code ++]`, `// [!code --]`
+- Code folding: `// [!code fold:start]`, `// [!code fold:end]`
+- Tail folding: `// [!code fold:start]` without `fold:end` folds to the end of the code block
+
+Fold notations must be written in comments for the current language. Paired
+`fold:start` and `fold:end` markers collapse the lines between them:
+
+```ts
+console.log("Visible before folded lines");
+// [!code fold:start]
+function hidden() {
+  return "Folded";
+}
+// [!code fold:end]
+console.log("Visible after folded lines");
+```
+
+For tail folding, omit `fold:end` and the component will render a bottom control
+to show the remaining lines:
+
+```yaml
+services:
+  halo:
+    image: halohub/halo:2
+    # [!code fold:start]
+    environment:
+      - SPRING_R2DBC_USERNAME=halo
+      - SPRING_R2DBC_PASSWORD=openpostgresql
+```
 
 For more details on how to use these features, please refer to the [Shiki Transformers documentation](https://shiki.style/packages/transformers).
 
