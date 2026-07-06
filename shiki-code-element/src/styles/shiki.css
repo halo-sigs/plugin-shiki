@@ -307,11 +307,13 @@ code .line:last-child:has(> span:empty:only-child) {
 }
 
 .has-fold-tail {
+  container-type: inline-size;
   padding-bottom: 0;
 }
 
 .has-fold-tail .fold-tail-control {
-  position: relative;
+  position: sticky;
+  left: calc(0px - var(--shiki-tail-control-offset));
   z-index: 1;
   display: flex;
   align-items: center;
@@ -331,6 +333,16 @@ code .line:last-child:has(> span:empty:only-child) {
   border-top: 0;
   box-shadow: 0 -0.5rem 1.25rem rgba(15, 23, 42, 0.06);
   transition: color 0.2s;
+}
+
+@supports (width: 100cqw) {
+  .has-fold-tail .fold-tail-control {
+    width: calc(
+      100cqw +
+      var(--shiki-tail-control-offset) +
+      var(--shiki-tail-control-offset)
+    );
+  }
 }
 
 .has-fold-tail .fold-tail-control::before {
