@@ -1,8 +1,8 @@
 import { rsbuildConfig } from "@halo-dev/ui-plugin-bundler-kit";
 import { pluginVue } from "@rsbuild/plugin-vue";
 
-const OUT_DIR_PROD = "../src/main/resources/console";
-const OUT_DIR_DEV = "../build/resources/main/console";
+const OUT_DIR_PROD = "../src/main/resources/ui";
+const OUT_DIR_DEV = "../build/resources/main/ui";
 
 /**
  * @type {import("@halo-dev/ui-plugin-bundler-kit").RsBuildUserConfig}

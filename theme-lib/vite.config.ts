@@ -17,9 +17,6 @@ const minifyBundle = (): Plugin => ({
 });
 
 export default defineConfig({
-  experimental: {
-    enableNativePlugin: true,
-  },
   plugins: [minifyBundle()],
   define: {
     "process.env.NODE_ENV": "production",
