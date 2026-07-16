@@ -3,6 +3,7 @@ import { css, html, unsafeCSS } from "lit";
 import { state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { when } from "lit/directives/when.js";
+import foldingStyle from "../code-folding/styles.css?inline";
 import shikiStyle from "../styles/shiki.css?inline";
 import { ShikiCodeBaseVariant } from "./base";
 
@@ -14,8 +15,6 @@ export class ShikiCodeMacVariant extends ShikiCodeBaseVariant {
     return html`
       <div
         class="shadow rounded-lg overflow-hidden relative group"
-        @click=${this.handleCodeBlockClick}
-        @keydown=${this.handleCodeBlockKeydown}
       >
         <header
           class="flex items-center h-10 justify-between px-4.5 opacity-95"
@@ -31,6 +30,7 @@ export class ShikiCodeMacVariant extends ShikiCodeBaseVariant {
           </div>
           <div class="inline-flex items-center gap-2">
             <button
+              aria-label="Toggle code block"
               class="select-none"
               tabindex="-1"
               @click=${() => {
@@ -51,7 +51,12 @@ export class ShikiCodeMacVariant extends ShikiCodeBaseVariant {
                   ></i>`,
               )}
             </button>
-            <button class="select-none" tabindex="-1" @click=${this.handleCopyCode}>
+            <button
+              aria-label="Copy code"
+              class="select-none"
+              tabindex="-1"
+              @click=${this.handleCopyCode}
+            >
               ${when(
                 this.copied,
                 () =>
@@ -73,6 +78,7 @@ export class ShikiCodeMacVariant extends ShikiCodeBaseVariant {
 
   static styles = [
     unsafeCSS(reset),
+    unsafeCSS(foldingStyle),
     unsafeCSS(shikiStyle),
     css`
       @unocss-placeholder;

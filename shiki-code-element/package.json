@@ -23,6 +23,7 @@
   "scripts": {
     "build": "tsc && vite build --config vite.lib.config.ts",
     "dev": "vite --config vite.dev.config.ts",
+    "test": "vitest run --environment happy-dom",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
@@ -32,8 +33,10 @@
     "@iconify-json/mingcute": "^1.2.7",
     "@iconify-json/tabler": "^1.2.35",
     "@unocss/reset": "^66.7.4",
+    "happy-dom": "^20.10.6",
     "unocss": "^66.7.4",
-    "vite-plugin-dts": "^5.0.3"
+    "vite-plugin-dts": "^5.0.3",
+    "vitest": "4.1.6"
   },
   "peerDependencies": {
     "@shikijs/transformers": "^3 || ^4",
