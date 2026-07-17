@@ -2,6 +2,7 @@ import reset from "@unocss/reset/tailwind.css?inline";
 import { css, html, unsafeCSS } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { when } from "lit/directives/when.js";
+import foldingStyle from "../code-folding/styles.css?inline";
 import shikiStyle from "../styles/shiki.css?inline";
 import { ShikiCodeBaseVariant } from "./base";
 
@@ -10,8 +11,6 @@ export class ShikiCodeSimpleVariant extends ShikiCodeBaseVariant {
     return html`
       <div
         class="shadow rounded-lg relative group"
-        @click=${this.handleCodeBlockClick}
-        @keydown=${this.handleCodeBlockKeydown}
       >
         ${unsafeHTML(this.options.html)}
         <div
@@ -21,6 +20,7 @@ export class ShikiCodeSimpleVariant extends ShikiCodeBaseVariant {
           ${this.options.languageName}
         </div>
         <button
+          aria-label="Copy code"
           class="opacity-0 z-2 select-none group-hover:opacity-100 transition-opacity absolute top-2 rounded right-2 size-8 inline-flex items-center justify-center"
           style="background-color: ${this.options.theme?.bg};"
           @click=${this.handleCopyCode}
@@ -40,6 +40,7 @@ export class ShikiCodeSimpleVariant extends ShikiCodeBaseVariant {
 
   static styles = [
     unsafeCSS(reset),
+    unsafeCSS(foldingStyle),
     unsafeCSS(shikiStyle),
     css`
       .shiki {

@@ -243,7 +243,7 @@ export class ShikiCode extends LitElement {
       transformerNotationErrorLevel,
     } = await import("@shikijs/transformers");
     const { transformerNotationFold } = await import(
-      "./transformers/notation-fold"
+      "./code-folding/transformer"
     );
 
     return await codeToHtml(code, {
