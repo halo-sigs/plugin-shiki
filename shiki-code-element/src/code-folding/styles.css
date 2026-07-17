@@ -191,7 +191,7 @@
   line-height: 0;
 }
 
-.has-fold-tail {
+.shiki.has-fold-tail {
   container-type: inline-size;
   padding-bottom: 0;
 }
