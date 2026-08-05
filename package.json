@@ -13,8 +13,8 @@
     ]
   },
   "dependencies": {
-    "@shikijs/transformers": "^4.3.1",
-    "shiki": "^4.3.1"
+    "@shikijs/transformers": "^4.4.2",
+    "shiki": "^4.4.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
