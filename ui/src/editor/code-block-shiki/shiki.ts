@@ -1,4 +1,5 @@
-import { bundledLanguagesInfo, bundledThemesInfo } from "shiki";
+import { bundledLanguagesInfo } from "shiki/langs";
+import { bundledThemesInfo } from "shiki/themes";
 
 export const fixedLanguages = [
   {

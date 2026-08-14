@@ -1,16 +1,13 @@
 // The code comes from https://github.com/timomeh/tiptap-extension-code-block-shiki/blob/main/lib/highlighter.ts
 
 import { findChildren, type PMNode } from "@halo-dev/richtext-editor";
-import {
-  type BundledLanguage,
-  type BundledTheme,
-  bundledLanguages,
-  bundledThemes,
-  createHighlighter,
-  type Highlighter,
-} from "shiki";
+import type { BundledLanguage, BundledTheme } from "shiki";
+import { createHighlighterCore, type HighlighterCore } from "shiki/core";
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+import { bundledLanguages } from "shiki/langs";
+import { bundledThemes } from "shiki/themes";
 
-let highlighter: Highlighter | undefined;
+let highlighter: HighlighterCore | undefined;
 let highlighterPromise: Promise<void> | undefined;
 const loadingLanguages = new Set<BundledLanguage>();
 const loadingThemes = new Set<BundledTheme>();
@@ -42,7 +39,11 @@ export function loadHighlighter(opts: HighlighterOptions) {
     const langs = opts.languages.filter(
       (lang): lang is BundledLanguage => !!lang && lang in bundledLanguages,
     );
-    highlighterPromise = createHighlighter({ themes, langs }).then((h) => {
+    highlighterPromise = createHighlighterCore({
+      themes: themes.map((theme) => bundledThemes[theme]),
+      langs: langs.map((lang) => bundledLanguages[lang]),
+      engine: createJavaScriptRegexEngine(),
+    }).then((h) => {
       highlighter = h;
     });
     return highlighterPromise;
@@ -65,7 +66,7 @@ export async function loadTheme(theme: BundledTheme) {
     theme in bundledThemes
   ) {
     loadingThemes.add(theme);
-    await highlighter.loadTheme(theme);
+    await highlighter.loadTheme(bundledThemes[theme]);
     loadingThemes.delete(theme);
     return true;
   }
@@ -85,7 +86,7 @@ export async function loadLanguage(language: BundledLanguage) {
     language in bundledLanguages
   ) {
     loadingLanguages.add(language);
-    await highlighter.loadLanguage(language);
+    await highlighter.loadLanguage(bundledLanguages[language]);
     loadingLanguages.delete(language);
     return true;
   }
