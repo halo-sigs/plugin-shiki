@@ -185,6 +185,14 @@ export function ShikiPlugin({
         // Initialize shiki async, and then highlight initial document
         async initDecorations() {
           const doc = view.state.doc;
+          const codeBlocks = findChildren(
+            doc,
+            (node) => node.type.name === name,
+          );
+          if (codeBlocks.length === 0) {
+            return;
+          }
+
           await initHighlighter({ doc, name, defaultLanguage, defaultTheme });
           const tr = view.state.tr.setMeta("shikiPluginForceDecoration", true);
           view.dispatch(tr);
@@ -197,6 +205,24 @@ export function ShikiPlugin({
             view.state.doc,
             (node) => node.type.name === name,
           );
+          if (codeBlocks.length === 0) {
+            return;
+          }
+
+          if (!getShiki()) {
+            await initHighlighter({
+              doc: view.state.doc,
+              name,
+              defaultLanguage,
+              defaultTheme,
+            });
+            const tr = view.state.tr.setMeta(
+              "shikiPluginForceDecoration",
+              true,
+            );
+            view.dispatch(tr);
+            return;
+          }
 
           // Load missing themes or languages when necessary.
           // loadStates is an array with booleans depending on if a theme/lang
