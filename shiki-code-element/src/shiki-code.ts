@@ -187,8 +187,11 @@ export class ShikiCode extends LitElement {
       );
       this.html = html;
 
-      const { getSingletonHighlighter } = await import("shiki");
-      const highlighter = await getSingletonHighlighter();
+      const { getHighlighter } = await import("./highlighter");
+      const highlighter = await getHighlighter(this.languageCode, [
+        this.lightTheme,
+        this.darkTheme || this.lightTheme,
+      ]);
 
       // Get language definition from shiki
       if (this.languageCode !== "plaintext") {
@@ -235,7 +238,7 @@ export class ShikiCode extends LitElement {
   }
 
   async renderCodeAsHtml(code: string, language: string): Promise<string> {
-    const { codeToHtml } = await import("shiki");
+    const { getHighlighter } = await import("./highlighter");
     const {
       transformerNotationDiff,
       transformerNotationHighlight,
@@ -246,7 +249,11 @@ export class ShikiCode extends LitElement {
       "./code-folding/transformer"
     );
 
-    return await codeToHtml(code, {
+    const highlighter = await getHighlighter(language, [
+      this.lightTheme,
+      this.darkTheme || this.lightTheme,
+    ]);
+    return highlighter.codeToHtml(code, {
       lang: language,
       themes: {
         light: this.lightTheme,

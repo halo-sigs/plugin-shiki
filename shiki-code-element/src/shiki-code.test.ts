@@ -29,13 +29,17 @@ function foldingRoot(element: ShikiCode) {
   return root;
 }
 
-async function renderCode(code: string, variant: Variant = "simple") {
+async function renderCode(
+  code: string,
+  variant: Variant = "simple",
+  language = "ts",
+) {
   const element = document.createElement("shiki-code") as ShikiCode;
   element.variant = variant;
 
   const pre = document.createElement("pre");
   const codeElement = document.createElement("code");
-  codeElement.className = "language-ts";
+  codeElement.className = `language-${language}`;
   codeElement.textContent = code;
   pre.append(codeElement);
   element.append(pre);
@@ -133,6 +137,18 @@ ${pairedFold}`);
 
   expect(first.getAttribute("aria-expanded")).toBe("true");
   expect(second.getAttribute("aria-expanded")).toBe("false");
+});
+
+it("loads different languages concurrently", async () => {
+  const [go, kotlin] = await Promise.all([
+    renderCode("package main", "simple", "go"),
+    renderCode("fun main() = Unit", "simple", "kotlin"),
+  ]);
+
+  expect(go.error).toBe("");
+  expect(go.languageName.toLowerCase()).toBe("go");
+  expect(kotlin.error).toBe("");
+  expect(kotlin.languageName.toLowerCase()).toBe("kotlin");
 });
 
 it("preserves inline end-marker range semantics", async () => {
