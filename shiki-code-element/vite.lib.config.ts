@@ -20,7 +20,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["shiki", "@shikijs/transformers"],
+      external: [/^shiki(?:\/.*)?$/, "@shikijs/transformers"],
     },
   },
 });
