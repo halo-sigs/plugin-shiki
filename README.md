@@ -122,6 +122,18 @@ console.log('Visible');
 console.log('Folded to the end');
 console.log('Folded to the end');
 ```
+折叠标记需要写在对应语言的注释里，渲染后标记内容会被自动移除。常用语言的写法对照如下：
+
+| 语言 | 注释风格 | 写法示例 |
+| ---- | ---- | ---- |
+| JavaScript / TypeScript / Java / C / C++ / C# / Go / Rust / PHP / Swift / Kotlin / Dart / Scala | `//` | `// [!code fold:start]` |
+| Python / Ruby / Shell(Bash) / YAML / TOML / R / Perl / PowerShell / Dockerfile / Makefile / Nginx 配置 | `#` | `# [!code fold:start]` |
+| HTML / XML / Markdown | `<!-- -->` | `<!-- [!code fold:start] -->` |
+| CSS / SCSS / Less | `/* */` | `/* [!code fold:start] */` |
+| SQL / Lua / Haskell | `--` | `-- [!code fold:start]` |
+| LaTeX / MATLAB / Erlang | `%` | `% [!code fold:start]` |
+| Lisp / Clojure / INI / 汇编 | `;` | `; [!code fold:start]` |
+| Vim Script | `"` | `" [!code fold:start]` |
 
 ## 注意事项
 
