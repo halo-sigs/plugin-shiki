@@ -41,99 +41,116 @@
 2. 编辑器设置
    1. 高亮主题：为 Halo 编辑器设置代码高亮风格。
 
-### 代码行功能
+### 代码行标记语法
 
-插件内建了 Shiki 的一些[代码转换器](https://shiki.style/packages/transformers)，包括行高亮、行聚焦、代码对比、代码折叠，以下是具体书写方式：
+插件内建了 Shiki 的一些[代码转换器](https://shiki.style/packages/transformers)，包括行高亮、行聚焦、代码对比和代码折叠。这些功能均通过在代码块中添加特定标记实现。
 
-#### 行高亮
+#### 基本写法
 
-使用 `// [!code highlight]` 或者 `// [!code hl]` 标记即可，示例：
+标记需要写在对应语言的注释中。不同语言的注释语法不同，请根据代码块使用的语言选择合适的注释风格。
 
-```ts
-console.log('Not highlighted')
-// [!code highlight]
-console.log('Highlighted')
-console.log('Not highlighted')
-```
+常用标记如下：
 
-也可以用 `// [!code highlight:n]` 批量标记后续 n 行。
+| 功能 | 标记 | 说明 |
+| ---- | ---- | ---- |
+| 行高亮 | `[!code highlight]` 或 `[!code hl]` | 高亮后续一行 |
+| 行高亮 | `[!code highlight:n]` | 高亮后续 n 行 |
+| 警告行 | `[!code warning]` | 为后续一行添加警告样式 |
+| 错误行 | `[!code error]` | 为后续一行添加错误样式 |
+| 行聚焦 | `[!code focus]` | 聚焦后续一行 |
+| 行聚焦 | `[!code focus:n]` | 聚焦后续 n 行 |
+| 代码对比 | `[!code --]` | 将后续一行标记为删除内容 |
+| 代码对比 | `[!code ++]` | 将后续一行标记为新增内容 |
+| 代码对比 | `[!code --:n]` / `[!code ++:n]` | 将后续 n 行标记为删除或新增内容 |
+| 代码折叠 | `[!code fold:start]` | 标记折叠区域的起始位置 |
+| 代码折叠 | `[!code fold:end]` | 标记折叠区域的结束位置 |
 
-此外，有两个额外的变体可以实现不同的背景色：`// [!code warning]`（警告） 和 `// [!code error]` （错误）。
+以上标记均应放在对应语言的注释中。例如，JavaScript 中的行高亮标记写作 `// [!code highlight]`，Python 中则写作 `# [!code highlight]`。
 
-#### 行聚焦
+标记本身用于控制渲染效果，渲染后会自动移除，不会作为普通代码内容显示。
 
-使用 `// [!code focus]` 标记即可，示例：
+#### 常用语言的注释写法
 
-```ts
-console.log('Not focused');
-// [!code focus]
-console.log('Focused');
-console.log('Not focused');
-```
-
-```ts
-console.log('Not focused');
-// [!code focus:2]
-console.log('Focused');
-console.log('Focused');
-```
-
-#### 代码对比
-
-使用 `// [!code --]`（减少行） 和 `// [!code ++]`（增加行） 标记即可，示例：
-
-```ts
-// [!code --]
-console.log('hewwo')
-// [!code ++]
-console.log('hello')
-console.log('goodbye')
-```
-
-```ts
-// [!code --]
-console.log('hewwo')
-// [!code ++:2]
-console.log('hello')
-console.log('goodbye')
-```
-
-#### 代码折叠
-
-使用 `// [!code fold:start]` 和 `// [!code fold:end]` 标记需要折叠的代码范围。标记需要写在对应语言的注释中，例如 JS/TS 使用 `//`，YAML、Shell 等可以使用 `#`。
-
-成对标记会折叠中间的代码，点击起始行上的折叠提示可以展开或收起，示例：
-
-```ts
-console.log('Visible');
-// [!code fold:start]
-function hidden() {
-  return 'Folded';
-}
-// [!code fold:end]
-console.log(hidden());
-```
-
-如果只写 `// [!code fold:start]`，则会从标记处折叠到代码块末尾，并在代码块底部显示展开按钮：
-
-```ts
-console.log('Visible');
-// [!code fold:start]
-console.log('Folded to the end');
-console.log('Folded to the end');
-```
-折叠标记需要写在对应语言的注释里，渲染后标记内容会被自动移除。常用语言的写法对照如下：
+下表以代码折叠的起始标记为例，列出了常见语言对应的注释写法。其他功能只需将示例中的 `[!code fold:start]` 替换为相应标记即可。
 
 | 语言 | 注释风格 | 写法示例 |
 | ---- | ---- | ---- |
 | JavaScript / TypeScript / Java / C / C++ / C# / Go / Rust / PHP / Swift / Kotlin / Dart / Scala | `//` | `// [!code fold:start]` |
-| Python / Ruby / Shell(Bash) / YAML / TOML / R / Perl / PowerShell / Dockerfile / Makefile / Nginx 配置 | `#` | `# [!code fold:start]` |
+| Python / Ruby / Shell（Bash）/ YAML / TOML / R / Perl / PowerShell / Dockerfile / Makefile / Nginx 配置 | `#` | `# [!code fold:start]` |
 | HTML / XML / Markdown | `<!-- -->` | `<!-- [!code fold:start] -->` |
 | CSS / SCSS / Less | `/* */` | `/* [!code fold:start] */` |
 | SQL / Lua / Haskell | `--` | `-- [!code fold:start]` |
 | LaTeX / MATLAB / Erlang | `%` | `% [!code fold:start]` |
 | Lisp / Clojure / INI / 汇编 | `;` | `; [!code fold:start]` |
 | Vim Script | `"` | `" [!code fold:start]` |
+
+#### 使用示例
+
+以下示例均使用 JavaScript 的 `//` 注释语法。使用其他语言时，请将标记替换为该语言对应的注释写法。
+
+**1. 行高亮**
+
+```ts
+console.log('Not highlighted')
+// [!code highlight]
+console.log('Highlighted')
+// [!code highlight:2]
+console.log('Highlighted')
+console.log('Highlighted')
+```
+
+**2. 行聚焦**
+
+```ts
+console.log('Not focused')
+// [!code focus]
+console.log('Focused')
+// [!code focus:2]
+console.log('Focused')
+console.log('Focused')
+```
+
+**3. 代码对比**
+
+```ts
+// [!code --]
+console.log('hewwo')
+// [!code ++]
+console.log('hello')
+// [!code ++:2]
+console.log('goodbye')
+console.log('welcome')
+```
+
+**4. 代码折叠**
+
+使用成对的起始和结束标记，可以折叠指定范围内的代码。点击起始行上的折叠提示即可展开或收起。
+
+```ts
+console.log('Visible')
+// [!code fold:start]
+function hidden() {
+  return 'Folded'
+}
+// [!code fold:end]
+console.log('Visible')
+```
+
+如果省略结束标记，则从起始标记处折叠至代码块末尾，并在代码块底部显示展开按钮。
+
+```ts
+console.log('Visible')
+// [!code fold:start]
+console.log('Folded to the end')
+console.log('Folded to the end')
+```
+
+#### 注意事项
+
+- 请根据代码块的实际语言选择正确的注释语法，避免标记被当作普通文本处理。
+- 带有 `:n` 的标记用于指定连续作用的行数，其中 `n` 为行数。
+- 代码折叠的起始和结束标记应成对使用；省略结束标记时，折叠范围默认延伸至代码块末尾。
+- 标记是渲染控制指令，渲染后会自动移除。
 
 ## 注意事项
 
