@@ -3,7 +3,7 @@ import yaml from "js-yaml";
 import { bundledThemesInfo } from "shiki/bundle/full";
 
 const settingsFilePath = new URL(
-  "../src/main/resources/extensions/settings.yaml",
+  "../../src/main/resources/extensions/settings.yaml",
   import.meta.url,
 );
 

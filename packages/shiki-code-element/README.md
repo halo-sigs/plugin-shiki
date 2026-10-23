@@ -80,7 +80,6 @@ yarn add @halo-dev/shiki-code-element @shikijs/transformers shiki
 ### Code Highlighting Features
 
 This component integrates with [Shiki Transformers](https://shiki.style/packages/transformers) to provide advanced code highlighting features. The following transformers are supported:
-
 - Line highlighting: `// [!code highlight]`
 - Line focus: `// [!code focus]`
 - Error/warning annotations: `// [!code error]`, `// [!code warning]`
@@ -120,12 +119,12 @@ For more details on how to use these features, please refer to the [Shiki Transf
 
 ### Properties
 
-| Property     | Attribute     | Type                | Default         | Description                                       |
-|--------------|---------------|---------------------|-----------------|---------------------------------------------------|
-| lightTheme   | light-theme   | string              | "github-light"  | Theme to use in light mode                        |
-| darkTheme    | dark-theme    | string              | "github-dark"   | Theme to use in dark mode                         |
-| variant      | variant       | "simple" \| "mac"   | "simple"        | Visual style variant                              |
-| fontSize     | font-size     | string              | "0.875em"       | Font size for the code block                      |
+| Property   | Attribute   | Type              | Default        | Description                  |
+| ---------- | ----------- | ----------------- | -------------- | ---------------------------- |
+| lightTheme | light-theme | string            | "github-light" | Theme to use in light mode   |
+| darkTheme  | dark-theme  | string            | "github-dark"  | Theme to use in dark mode    |
+| variant    | variant     | "simple" \| "mac" | "simple"       | Visual style variant         |
+| fontSize   | font-size   | string            | "0.875em"      | Font size for the code block |
 
 ## Browser Support
 

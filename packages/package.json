@@ -4,7 +4,7 @@
     "build:theme-lib": "pnpm -C theme-lib build",
     "build:ui": "pnpm -C ui build",
     "check": "biome check --write",
-    "prepare": "husky",
+    "prepare": "cd .. && packages/node_modules/.bin/husky",
     "publish": "pnpm -r publish --access public --no-git-checks"
   },
   "lint-staged": {
@@ -17,19 +17,12 @@
     "shiki": "^4.4.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.6.2",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "prettier": "^3.9.6",
     "typescript": "~5.9.3",
     "vite": "^8.2.1"
   },
-  "packageManager": "pnpm@10.34.1",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "core-js",
-      "esbuild",
-      "vue-demi"
-    ]
-  }
+  "packageManager": "pnpm@12.15.0"
 }

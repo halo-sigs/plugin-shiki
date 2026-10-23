@@ -29,6 +29,6 @@ export default defineConfig({
       formats: ["es"],
     },
     emptyOutDir: true,
-    outDir: "../src/main/resources/static",
+    outDir: "dist",
   },
 });
