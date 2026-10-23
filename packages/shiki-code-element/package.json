@@ -30,13 +30,13 @@
     "lit": "^3.3.3"
   },
   "devDependencies": {
-    "@iconify-json/mingcute": "^1.2.7",
-    "@iconify-json/tabler": "^1.2.35",
-    "@unocss/reset": "^66.7.4",
-    "happy-dom": "^20.10.6",
-    "unocss": "^66.7.4",
-    "vite-plugin-dts": "^5.0.3",
-    "vitest": "4.1.6"
+    "@iconify-json/mingcute": "^1.2.8",
+    "@iconify-json/tabler": "^1.2.42",
+    "@unocss/reset": "^66.11.0",
+    "happy-dom": "^20.14.6",
+    "unocss": "^66.11.0",
+    "vite-plugin-dts": "^5.1.2",
+    "vitest": "4.1.12"
   },
   "peerDependencies": {
     "@shikijs/transformers": "^3 || ^4",
