@@ -800,9 +800,13 @@ Use language "auto" or "text" to verify alias handling.`,
         classPrefixSelect,
         fontSizeSelect,
         previewWidthRange,
-      ].forEach((control) => control.addEventListener("input", queueRender));
+      ].forEach((control) => {
+        control.addEventListener("input", queueRender);
+      });
 
-      schemeInputs.forEach((input) => input.addEventListener("change", renderPreview));
+      schemeInputs.forEach((input) => {
+        input.addEventListener("change", renderPreview);
+      });
       renderButton.addEventListener("click", renderPreview);
       resetButton.addEventListener("click", () => {
         if (sampleSelect.value === "custom") {

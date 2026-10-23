@@ -1,10 +1,11 @@
 import path from "node:path";
 import { viteConfig } from "@halo-dev/ui-plugin-bundler-kit/vite";
 
-const OUT_DIR_PROD = "../src/main/resources/ui";
-const OUT_DIR_DEV = "../build/resources/main/ui";
+const OUT_DIR_PROD = "build/dist";
+const OUT_DIR_DEV = "../../build/resources/main/ui";
 
 export default viteConfig({
+  manifestPath: "../../src/main/resources/plugin.yaml",
   vue: {
     template: {
       compilerOptions: {

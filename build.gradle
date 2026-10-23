@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id "com.github.node-gradle.node" version "7.1.0"
+    id "com.github.node-gradle.node" version "7.1.0" apply false
     id "io.freefair.lombok" version "9.2.0"
     id "run.halo.plugin.devtools" version "0.8.0"
 }
@@ -35,25 +35,25 @@ tasks.withType(JavaCompile).configureEach {
     options.release = 21
 }
 
-node {
-    nodeProjectDir = file("${project.projectDir}")
-    pnpmVersion = '10'
-}
+sourceSets.main.resources.exclude 'ui/**', 'console/**', 'static/**'
 
-tasks.register('buildFrontend', PnpmTask) {
-    args = ['build']
-    dependsOn('installDepsForUI')
-}
-
-tasks.register('installDepsForUI', PnpmTask) {
-    args = ['install']
-}
-
-build {
-    // build frontend before build
-    tasks.named('compileJava').configure {
-        dependsOn('buildFrontend')
+tasks.named('processResources', Copy) {
+    dependsOn project(':packages').tasks.named('pnpmBuild')
+    from(project(':packages').layout.projectDirectory.dir('ui/build/dist')) {
+        into 'ui'
     }
+    from(project(':packages').layout.projectDirectory.dir('theme-lib/dist')) {
+        into 'static'
+    }
+    doFirst {
+        delete layout.buildDirectory.dir('resources/main/ui'),
+            layout.buildDirectory.dir('resources/main/console'),
+            layout.buildDirectory.dir('resources/main/static')
+    }
+}
+
+tasks.named('clean') {
+    dependsOn project(':packages').tasks.named('clean')
 }
 
 tasks.named('generatePluginComponentsIdx') {

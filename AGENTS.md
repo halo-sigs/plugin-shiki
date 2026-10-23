@@ -6,10 +6,11 @@ This repository contains the Halo Shiki code highlighting plugin.
 
 - Java backend lives in `src/main/java/run/halo/shiki` and integrates with Halo plugin APIs.
 - Plugin metadata and Halo resources live in `src/main/resources`, including `plugin.yaml`, settings, role templates, and reverse proxy resources.
-- Console/editor UI lives in `ui/src` and is bundled with `@halo-dev/ui-plugin-bundler-kit`.
-- The reusable web component package lives in `shiki-code-element`.
-- The theme-side rendering helper lives in `theme-lib`.
-- Utility scripts live in `scripts`.
+- All frontend packages live in `packages`, which is both a Gradle subproject and the pnpm workspace root.
+- Console/editor UI lives in `packages/ui/src` and is bundled with `@halo-dev/ui-plugin-bundler-kit`.
+- The reusable web component package lives in `packages/shiki-code-element`.
+- The theme-side rendering helper lives in `packages/theme-lib`.
+- Utility scripts live in `packages/scripts`.
 
 Keep changes scoped to the module that owns the behavior. Avoid unrelated formatting churn across the Java backend, Console UI, web component package, and theme helper.
 
@@ -22,13 +23,13 @@ Keep changes scoped to the module that owns the behavior. Avoid unrelated format
 
 ## Setup Commands
 
-- Install dependencies: `pnpm install`
+- Install dependencies: `pnpm -C packages install`
 - Build Java and frontend bundles: `./gradlew build`
 - Run Java tests: `./gradlew test`
-- Build all pnpm workspace packages: `pnpm build`
-- Build Console UI only: `pnpm -C ui build`
-- Build web component package only: `pnpm -C shiki-code-element build`
-- Build theme helper only: `pnpm -C theme-lib build`
+- Build all pnpm workspace packages: `pnpm -C packages build`
+- Build Console UI only: `pnpm -C packages/ui build`
+- Build web component package only: `pnpm -C packages/shiki-code-element build`
+- Build theme helper only: `pnpm -C packages/theme-lib build`
 
 Use Java 21. The Gradle build is configured with a Java 21 toolchain and `options.release = 21`.
 
@@ -37,8 +38,8 @@ Use Java 21. The Gradle build is configured with a Java 21 toolchain and `option
 - Start Halo plugin dev server: `./gradlew haloServer`
 - Reload plugin after backend/resource changes: `./gradlew reload`
 - Watch plugin changes when developing locally: `./gradlew watch`
-- Watch Console UI bundle: `pnpm -C ui dev`
-- Start the `shiki-code-element` demo app: `pnpm -C shiki-code-element dev`
+- Watch Console UI bundle: `pnpm -C packages/ui dev`
+- Start the `shiki-code-element` demo app: `pnpm -C packages/shiki-code-element dev`
 
 Do not run publish or release commands unless explicitly asked.
 
@@ -47,10 +48,10 @@ Do not run publish or release commands unless explicitly asked.
 Choose the smallest meaningful checks for the change:
 
 - Backend Java changes: run `./gradlew test`; run `./gradlew build` when plugin resources or frontend integration may be affected.
-- Console UI changes: run `pnpm -C ui build`; run `./gradlew build` before finishing integration work.
-- `shiki-code-element` changes: run `pnpm -C shiki-code-element build`.
-- `theme-lib` changes: run `pnpm -C theme-lib build`.
-- Workspace TypeScript or formatting changes: run `pnpm build` or `pnpm check` as appropriate.
+- Console UI changes: run `pnpm -C packages/ui build`; run `./gradlew build` before finishing integration work.
+- `shiki-code-element` changes: run `pnpm -C packages/shiki-code-element build`.
+- `theme-lib` changes: run `pnpm -C packages/theme-lib build`.
+- Workspace TypeScript or formatting changes: run `pnpm -C packages build` or `pnpm -C packages check` as appropriate.
 
 If a command cannot be run, report the reason and the next best verification that was performed.
 
@@ -74,9 +75,10 @@ If a command cannot be run, report the reason and the next best verification tha
 ## Frontend And Rendering Guidance
 
 - Console UI should use Halo shared packages and existing plugin extension points.
-- Editor integration lives under `ui/src/editor/code-block-shiki`; keep editor-specific behavior there.
+- Editor integration lives under `packages/ui/src/editor/code-block-shiki`; keep editor-specific behavior there.
 - Theme-side rendering should remain compatible with ordinary `pre > code` markup and should respect excluded languages.
-- `shiki-code-element` owns the Lit web component, variants, copy behavior, theme switching, and Shiki rendering details.
+- `packages/shiki-code-element` owns the Lit web component, variants, copy behavior, theme switching, and Shiki rendering details.
+- Frontend build output stays inside `packages` (`ui/build/dist`, `theme-lib/dist`, `shiki-code-element/dist`); the root Gradle build copies it into the plugin resources.
 - Avoid adding large synchronous frontend work to page load paths; this plugin should keep language and theme loading lightweight.
 
 ## Security And Safety

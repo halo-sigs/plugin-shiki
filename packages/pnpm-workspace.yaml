@@ -3,3 +3,5 @@ packages:
   - theme-lib
   - ui
   - scripts
+allowBuilds:
+  core-js: true
