@@ -13,16 +13,16 @@
     ]
   },
   "dependencies": {
-    "@shikijs/transformers": "^4.4.3",
-    "shiki": "^4.4.3"
+    "@shikijs/transformers": "^4.5.0",
+    "shiki": "^4.5.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.2",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.8",
-    "prettier": "^3.9.6",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
     "typescript": "~5.9.3",
-    "vite": "^8.2.1"
+    "vite": "^8.3.5"
   },
   "packageManager": "pnpm@12.15.0"
 }
